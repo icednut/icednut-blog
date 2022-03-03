@@ -21,7 +21,7 @@ export default function Home({ posts }) {
             Icednut's Space
           </div>
           <p>
-            준비 중
+            리뉴얼 준비 중 입니다.
           </p>
         </header>
 
@@ -29,7 +29,7 @@ export default function Home({ posts }) {
         <ol className={styles.posts}>
           {posts.filter((post) => post.properties.Published.checkbox).map((post) => {
             const date = new Date(post.last_edited_time).toLocaleString(
-              "en-US",
+              "ko-KR",
               {
                 month: "short",
                 day: "2-digit",
