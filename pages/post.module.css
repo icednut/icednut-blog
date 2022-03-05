@@ -56,6 +56,10 @@
   overflow: auto;
 }
 
+.callout {
+  white-space: pre-line;
+}
+
 .code_block {
   padding: 20px;
   font-family: monospace;
