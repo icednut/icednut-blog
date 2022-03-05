@@ -94,7 +94,7 @@
   text-decoration: underline;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   .code {
     background-color: rgb(15, 8, 28);
   }
@@ -106,4 +106,4 @@
   .pre {
     background-color: rgb(15, 8, 28);
   }
-}
+} */

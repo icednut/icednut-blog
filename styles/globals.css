@@ -11,12 +11,12 @@ body {
   color: black;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   body {
     background-color: rgb(24, 24, 31);
     color: rgb(238, 238, 238);
   }
-}
+} */
 
 a {
   color: #2563eb;
