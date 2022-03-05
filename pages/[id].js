@@ -128,6 +128,27 @@ const renderBlock = (block) => {
           {caption_file && <figcaption>{caption_file}</figcaption>}
         </figure>
       );
+    case "callout":
+      var emoji
+      
+      switch (value.icon.type) {
+        case "emoji":
+          emoji = value.icon.emoji;
+          break;
+        default:
+          emoji = '';
+          break;
+      }
+      // console.log(emoji, value)
+
+      return (
+        <p>
+          <div>{emoji}</div>
+          <pre className={styles.callout}>
+            {value.text[0].plain_text}
+          </pre>
+        </p>
+      );
     default:
       return `❌ Unsupported block (${
         type === "unsupported" ? "unsupported by Notion API" : type
