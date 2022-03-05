@@ -139,15 +139,13 @@ const renderBlock = (block) => {
           emoji = '';
           break;
       }
-      // console.log(emoji, value)
+      //  console.log(emoji, value)
 
+        {/* <div>{emoji}</div> */}
       return (
-        <p>
-          <div>{emoji}</div>
-          <pre className={styles.callout}>
-            {value.text[0].plain_text}
-          </pre>
-        </p>
+        <pre className={styles.callout}>
+          {value.text[0].plain_text}
+        </pre>
       );
     default:
       return `❌ Unsupported block (${
