@@ -196,7 +196,7 @@ export default function Post({ page, blocks }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <article className="leading-loose">
+      <article className="leading-loose px-2">
         <div className="absolute inset-0 text-center py-10 bg-cover bg-center z-20" style={{backgroundImage: "url(" + thumbnailUrl + ")"}}>
         </div>
         <div className="absolute inset-0 bg-black opacity-70 z-20">
