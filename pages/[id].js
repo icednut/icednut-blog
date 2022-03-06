@@ -44,21 +44,21 @@ const renderBlock = (block) => {
       );
     case "heading_1":
       return (
-        <h1>
-          <Text text={value.text} />
-        </h1>
-      );
-    case "heading_2":
-      return (
-        <h2>
+        <h2 className="text-2xl mt-4 mb-1 font-bold">
           <Text text={value.text} />
         </h2>
       );
-    case "heading_3":
+    case "heading_2":
       return (
-        <h3>
+        <h3 className="text-xl mt-3 mb-1 font-bold"> 
           <Text text={value.text} />
         </h3>
+      );
+    case "heading_3":
+      return (
+        <h4 className="text-lg mt-2 mb-1 font-bold">
+          <Text text={value.text} />
+        </h4>
       );
     case "bulleted_list_item":
     case "numbered_list_item":
@@ -105,8 +105,8 @@ const renderBlock = (block) => {
       return <blockquote key={id}>{value.text[0].plain_text}</blockquote>;
     case "code":
       return (
-        <pre className={styles.pre}>
-          <code className={styles.code_block} key={id}>
+        <pre className={styles.pre + " bg-gray-100 my-2"}>
+          <code className={styles.code_block + " p-4 flex flex-wrap leading-tight"} key={id}>
             {value.text[0].plain_text}
           </code>
         </pre>
@@ -143,7 +143,7 @@ const renderBlock = (block) => {
 
         {/* <div>{emoji}</div> */}
       return (
-        <pre className={styles.callout}>
+        <pre className="whitespace-pre-line" key={id}>
           {value.text[0].plain_text}
         </pre>
       );
@@ -165,10 +165,12 @@ export default function Post({ page, blocks }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <article className={styles.container}>
-        <h1 className={styles.name}>
-          <Text text={page.properties.Page.title} />
-        </h1>
+      <article className="leading-loose">
+        <div className="text-center border-b-2 border-red-400 py-4 my-4">
+          <h1 className="w-4/5 text-4xl font-black mx-auto leading-relaxed break-words">
+            <Text text={page.properties.Page.title} />
+          </h1>
+        </div>
         <section>
           {blocks.map((block) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
