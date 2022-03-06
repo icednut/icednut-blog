@@ -9,3 +9,11 @@ body {
 a {
     @apply text-red-500 hover:underline;
 }
+
+.blog-btn {
+    @apply rounded bg-red-600 text-white px-2.5 py-1;
+}
+
+.post-tag {
+    @apply font-bold rounded bg-transparent border-2 border-red-600 text-red-600 px-2 py-1 mr-2;
+}

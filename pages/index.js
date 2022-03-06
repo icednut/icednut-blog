@@ -1,11 +1,10 @@
 import Head from "next/head";
 import Link from "next/link";
 import { getDatabase } from "../lib/notion";
-import { Text } from "./[id].js";
+import { Text, getTags, getThumbnailUrl } from "./[id].js";
 import styles from "./index.module.css";
 
 export const databaseId = process.env.NOTION_DATABASE_ID;
-// export const databaseId = '20d8727a3dcf4757aabe3636c31675b3';
 
 export default function Home({ posts }) {
   return (
@@ -20,12 +19,9 @@ export default function Home({ posts }) {
           <div className={styles.logos}>
             Icednut's Space
           </div>
-          <p>
-            리뉴얼 준비 중 입니다.
-          </p>
+          <p>리뉴얼 준비 중 입니다.</p>
         </header>
 
-        <h2 className={styles.heading}>All Posts</h2>
         <ol className={styles.posts}>
           {posts.filter((post) => post.properties.Published.checkbox).map((post) => {
             const date = new Date(post.last_edited_time).toLocaleString(
@@ -36,20 +32,27 @@ export default function Home({ posts }) {
                 year: "numeric",
               }
             );
-            return (
-              <li key={post.id} className={styles.post}>
-                <h3 className={styles.postTitle}>
-                  <Link href={`/${post.id}`}>
-                    <a>
-                      <Text text={post.properties.Page.title} />
-                    </a>
-                  </Link>
-                </h3>
 
-                <p className={styles.postDescription}>{date}</p>
-                <Link href={`/${post.id}`}>
-                  <a> Read post →</a>
-                </Link>
+            const tags = getTags(post);
+            const thumbnailUrl = getThumbnailUrl(post);
+
+            return (
+              <li key={post.id} className="flex flex-row gap-4 content-center overflow-hidden rounded shadow-lg mb-4">
+                <div className="flex-none w-32 h-32 bg-cover bg-center" style={{backgroundImage: "url(" + thumbnailUrl + ")"}}>
+                </div>
+                <div className="shrink my-auto">
+                  <h3>
+                    <Link href={`/${post.id}`}>
+                      <a className="font-extrabold text-lg text-black">
+                        <Text text={post.properties.Page.title} />
+                      </a>
+                    </Link>
+                  </h3>
+                  <p className="text-medium text-sm text-neutral-500 pb-2">{date}</p>
+                  <p className="">
+                    {tags.map(tag => (<span className="post-tag text-xs">#{tag}</span>))}
+                  </p>
+                </div>
               </li>
             );
           })}

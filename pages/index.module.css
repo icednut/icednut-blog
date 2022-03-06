@@ -42,8 +42,6 @@
 
 .posts {
   list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .post {
@@ -51,8 +49,7 @@
 }
 
 .postTitle {
-  margin-bottom: 10px;
-  font-size: 1.4rem;
+  @apply text-lg font-bold;
 }
 
 .postTitle a {
@@ -60,7 +57,5 @@
 }
 
 .postDescription {
-  margin-top: 0;
-  margin-bottom: 12px;
-  opacity: 0.65;
+  @apply opacity-60 text-sm font-light pb-4;
 }

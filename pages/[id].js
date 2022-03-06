@@ -154,10 +154,41 @@ const renderBlock = (block) => {
   }
 };
 
+export const getTags = (page) => {
+  if (!page.properties || !page.properties.Tags || page.properties.Tags.type != 'multi_select' || !page.properties.Tags.multi_select) {
+    return [];
+  }
+
+  const tags = page.properties.Tags.multi_select;
+
+  return tags.map(tag => tag.name);
+};
+
+const getPostingDate = (page) => {
+  if (!page.properties || !page.properties.Date || page.properties.Date.type != 'date' || !page.properties.Date.date || !page.properties.Date.date.start) {
+    return 'unknown';
+  }
+
+  return page.properties.Date.date.start;
+};
+
+export const getThumbnailUrl = (page) => {
+  if (!page.cover || !page.cover.external || !page.cover.external.url) {
+    return ''; // TODO: default image url
+  }
+
+  return page.cover.external.url;
+};
+
 export default function Post({ page, blocks }) {
   if (!page || !blocks) {
     return <div />;
   }
+
+  const tags = getTags(page);
+  const postingDate = getPostingDate(page);
+  const thumbnailUrl = getThumbnailUrl(page);
+
   return (
     <div>
       <Head>
@@ -166,18 +197,39 @@ export default function Post({ page, blocks }) {
       </Head>
 
       <article className="leading-loose">
-        <div className="text-center border-b-2 border-red-400 py-4 my-4">
-          <h1 className="w-4/5 text-4xl font-black mx-auto leading-relaxed break-words">
-            <Text text={page.properties.Page.title} />
-          </h1>
+        <div className="absolute inset-0 text-center py-10 bg-cover bg-center z-20" style={{backgroundImage: "url(" + thumbnailUrl + ")"}}>
+        </div>
+        <div className="absolute inset-0 bg-black opacity-70 z-20">
+        </div>
+        <div className="absolute inset-0 z-30">
+          <div className="w-4/5 mx-auto text-center text-white pt-28">
+            <p>
+              {tags.map(tag => (<span className="post-tag text-sm">#{tag}</span>))}
+            </p>
+            <h1 className="text-4xl font-black leading-relaxed break-words">
+              <Text text={page.properties.Page.title} />
+            </h1>
+            <p className="opacity-60">
+              {postingDate}
+            </p>
+          </div>
+        </div>
+        <div className="h-screen mb-16">
+        </div>
+        <div className="fixed top-0 inset-x-0 px-4 py-2 bg-white border-b border-zinc-300">
+          <Text text={page.properties.Page.title} />
         </div>
         <section>
-          {blocks.map((block) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
-          ))}
-          <Link href="/">
-            <a className={styles.back}>← Go home</a>
-          </Link>
+          <div id="post-content">
+            {blocks.map((block) => (
+              <Fragment key={block.id}>{renderBlock(block)}</Fragment>
+            ))}
+          </div>
+          <div id="post-footer" className="py-4">
+            <Link href="/">
+              <button className="blog-btn">Home</button>
+            </Link>
+          </div>
         </section>
       </article>
     </div>
