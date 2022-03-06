@@ -15,7 +15,7 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.container}>
+      <main>
         <header className={styles.header}>
           <div className={styles.logos}>
             Icednut's Space

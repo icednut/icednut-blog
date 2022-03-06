@@ -5,10 +5,6 @@
   line-height: 1.5;
 }
 
-.container h1 {
-  font-size: 32px;
-}
-
 .container img {
   width: 100%;
   height: auto;
@@ -48,11 +44,7 @@
 }
 
 .pre {
-  background-color: rgb(242, 242, 242);
-  padding: 2px 4px;
-  margin: 20px 0;
-  line-height: 2.3;
-  border-radius: 12px;
+  /* background-color: rgb(242, 242, 242); */
   overflow: auto;
 }
 
@@ -61,10 +53,7 @@
 }
 
 .code_block {
-  padding: 20px;
   font-family: monospace;
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .file {
