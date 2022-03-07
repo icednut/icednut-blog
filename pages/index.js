@@ -44,9 +44,9 @@ export default function Home({ posts }) {
                 <div className="flex-none">
                   <h3>
                     <Link href={`/${post.id}`}>
-                      <a className="font-bold text-lg text-black">
+                      <p className="font-bold text-lg text-black">
                         <Text text={post.properties.Page.title} />
-                      </a>
+                      </p>
                     </Link>
                   </h3>
                 </div>
