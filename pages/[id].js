@@ -1,9 +1,18 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import Head from "next/head";
 import { getDatabase, getPage, getBlocks } from "../lib/notion";
 import Link from "next/link";
 import { databaseId } from "./index.js";
 import styles from "./post.module.css";
+import Prism from "prismjs";
+import "prismjs/plugins/line-numbers/prism-line-numbers.min.css";
+import "prismjs/plugins/line-numbers/prism-line-numbers.min.js";
+import "prismjs/plugins/autoloader/prism-autoloader";
+import 'prismjs/plugins/toolbar/prism-toolbar';
+import 'prismjs/plugins/show-language/prism-show-language';
+import "prismjs/themes/prism-tomorrow.min.css";
+import "prismjs/components/prism-java";
+import "prismjs/components/prism-scala";
 
 export const Text = ({ text }) => {
   if (!text) {
@@ -44,19 +53,19 @@ const renderBlock = (block) => {
       );
     case "heading_1":
       return (
-        <h2 className="text-2xl mt-4 mb-1 font-bold">
+        <h2 className="text-2xl mt-6 mb-1 font-bold">
           <Text text={value.text} />
         </h2>
       );
     case "heading_2":
       return (
-        <h3 className="text-xl mt-3 mb-1 font-bold"> 
+        <h3 className="text-xl mt-4 mb-1 font-bold"> 
           <Text text={value.text} />
         </h3>
       );
     case "heading_3":
       return (
-        <h4 className="text-lg mt-2 mb-1 font-bold">
+        <h4 className="text-lg mt-3 mb-1 font-bold">
           <Text text={value.text} />
         </h4>
       );
@@ -105,8 +114,8 @@ const renderBlock = (block) => {
       return <blockquote key={id}>{value.text[0].plain_text}</blockquote>;
     case "code":
       return (
-        <pre className={styles.pre + " bg-gray-100 my-2"}>
-          <code className={styles.code_block + " p-4 flex flex-wrap leading-tight"} key={id}>
+        <pre className={"rounded language-" + value.language}>
+          <code key={id}>
             {value.text[0].plain_text}
           </code>
         </pre>
@@ -141,10 +150,12 @@ const renderBlock = (block) => {
       }
       //  console.log(emoji, value)
 
-        {/* <div>{emoji}</div> */}
       return (
-        <pre className="whitespace-pre-line" key={id}>
-          {value.text[0].plain_text}
+        <pre className="whitespace-pre-line flex bg-slate-600 text-white font-medium p-4 rounded text-base" key={id}>
+          <div className="flex-none w-8">{emoji}</div>
+          <p className="shrink">
+            {value.text[0].plain_text}
+          </p>
         </pre>
       );
     default:
@@ -189,6 +200,13 @@ export default function Post({ page, blocks }) {
   const postingDate = getPostingDate(page);
   const thumbnailUrl = getThumbnailUrl(page);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      Prism.plugins.autoloader.languages_path = '/prism-grammers/';
+      Prism.highlightAll();
+    }
+  }, []);
+
   return (
     <div>
       <Head>
@@ -196,7 +214,7 @@ export default function Post({ page, blocks }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <article className="leading-loose px-4 mb-10">
+      <article className="leading-loose px-6 mb-10">
         <div className="absolute inset-0 text-center py-10 bg-cover bg-center z-20" style={{backgroundImage: "url(" + thumbnailUrl + ")"}}>
         </div>
         <div className="absolute inset-0 bg-black opacity-70 z-20">
@@ -206,7 +224,7 @@ export default function Post({ page, blocks }) {
             <div className="flex flex-wrap gap-3 justify-center">
               {tags.map(tag => (<div className="blog-link text-sm">#{tag}</div>))}
             </div>
-            <h1 className="text-4xl font-black leading-relaxed break-words">
+            <h1 className="text-4xl font-black leading-relaxed break-words post-title">
               <Text text={page.properties.Page.title} />
             </h1>
             <p className="opacity-60">
@@ -216,11 +234,11 @@ export default function Post({ page, blocks }) {
         </div>
         <div className="h-screen mb-16">
         </div>
-        <div className="fixed top-0 inset-x-0 px-4 py-2 bg-white drop-shadow-md">
+        <div className="fixed top-0 inset-x-0 px-4 py-2 bg-white drop-shadow-md post-title z-10">
           <Text text={page.properties.Page.title} />
         </div>
         <section>
-          <div id="post-content">
+          <div id="post-content" className="line-numbers">
             {blocks.map((block) => (
               <Fragment key={block.id}>{renderBlock(block)}</Fragment>
             ))}
