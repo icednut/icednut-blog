@@ -164,7 +164,7 @@ export const getTags = (page) => {
   return tags.map(tag => tag.name);
 };
 
-const getPostingDate = (page) => {
+export const getPostingDate = (page) => {
   if (!page.properties || !page.properties.Date || page.properties.Date.type != 'date' || !page.properties.Date.date || !page.properties.Date.date.start) {
     return 'unknown';
   }
@@ -196,7 +196,7 @@ export default function Post({ page, blocks }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <article className="leading-loose px-4">
+      <article className="leading-loose px-4 mb-10">
         <div className="absolute inset-0 text-center py-10 bg-cover bg-center z-20" style={{backgroundImage: "url(" + thumbnailUrl + ")"}}>
         </div>
         <div className="absolute inset-0 bg-black opacity-70 z-20">
