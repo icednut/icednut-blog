@@ -196,16 +196,16 @@ export default function Post({ page, blocks }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <article className="leading-loose px-2">
+      <article className="leading-loose px-4">
         <div className="absolute inset-0 text-center py-10 bg-cover bg-center z-20" style={{backgroundImage: "url(" + thumbnailUrl + ")"}}>
         </div>
         <div className="absolute inset-0 bg-black opacity-70 z-20">
         </div>
         <div className="absolute inset-0 z-30">
           <div className="w-4/5 mx-auto text-center text-white pt-28">
-            <p>
-              {tags.map(tag => (<span className="post-tag text-sm">#{tag}</span>))}
-            </p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              {tags.map(tag => (<div className="blog-link text-sm">#{tag}</div>))}
+            </div>
             <h1 className="text-4xl font-black leading-relaxed break-words">
               <Text text={page.properties.Page.title} />
             </h1>
@@ -216,7 +216,7 @@ export default function Post({ page, blocks }) {
         </div>
         <div className="h-screen mb-16">
         </div>
-        <div className="fixed top-0 inset-x-0 px-4 py-2 bg-white border-b border-zinc-300">
+        <div className="fixed top-0 inset-x-0 px-4 py-2 bg-white drop-shadow-md">
           <Text text={page.properties.Page.title} />
         </div>
         <section>
@@ -227,7 +227,7 @@ export default function Post({ page, blocks }) {
           </div>
           <div id="post-footer" className="py-4">
             <Link href="/">
-              <button className="blog-btn">Home</button>
+              <a className="blog-link">Home</a>
             </Link>
           </div>
         </section>

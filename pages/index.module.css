@@ -40,14 +40,6 @@
   }
 } */
 
-.posts {
-  list-style: none;
-}
-
-.post {
-  margin-bottom: 50px;
-}
-
 .postTitle {
   @apply text-lg font-bold;
 }
