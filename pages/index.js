@@ -6,6 +6,70 @@ import styles from "./index.module.css";
 
 export const databaseId = process.env.NOTION_DATABASE_ID;
 
+const getExtraContentUrl = (post) => {
+  if (!post.properties || !post.properties.cms || !post.properties.cms.select || !post.properties.cms.select.name) {
+    return "";
+  }
+  var extraContentUrl;
+  switch (post.properties.cms.select.name) {
+    case "velog":
+      extraContentUrl = post.properties.extra_contents.rich_text[0].href;
+      break;
+    default:
+      break;
+  }
+  return extraContentUrl;
+};
+
+const getPostPrviewDom = (post) => {
+  const extraContentUrl = getExtraContentUrl(post);
+  var postPreview;
+  
+  if (!extraContentUrl) {
+    postPreview = (
+      <p className="text-sm text-neutral-500 leading-relaxed cursor-pointer">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce velit tortor, dictum in gravida nec, aliquet non lorem. Donec vestibulum justo a diam ultricies pellentesque. Quisque mattis diam vel lacus tincidunt elementum.
+      </p>
+    );
+  } else {
+    postPreview = (<></>);
+  }
+
+  return postPreview;
+};
+
+const getPostThumbnail = (post) => {
+  const thumbnailUrl = getThumbnailUrl(post);
+  var postThumbnail = (
+    <Link href={`/${post.id}`}>
+      <div className="w-full h-64 bg-cover bg-center cursor-pointer" style={{backgroundImage: "url(" + thumbnailUrl + ")"}} />
+    </Link>
+  );
+
+  if (!post.properties || !post.properties.cms || !post.properties.cms.select || !post.properties.cms.select.name) {
+    return postThumbnail;
+  }
+
+  const extraContentUrl = getExtraContentUrl(post);
+
+  switch (post.properties.cms.select.name) {
+    case "velog":
+      postThumbnail = (
+        <Link href={extraContentUrl}>
+          <div className="bg-slate-200 grid grid-cols-3 gap-4 place-content-center place-items-center h-64 cursor-pointer">
+            <div className="h-28"></div>
+            <div className="h-28 text-8xl text-slate-600 text-center">Velog</div>
+            <div className="h-28"></div>
+          </div>
+        </Link>
+      );
+      break;
+    default:
+      break;
+  }
+  return postThumbnail;
+};
+
 export default function Home({ posts }) {
   return (
     <div>
@@ -36,18 +100,15 @@ export default function Home({ posts }) {
                 );
 
                 const tags = getTags(post);
-                const thumbnailUrl = getThumbnailUrl(post);
-
+                const postThumbnail = getPostThumbnail(post);
+                const postPreview = getPostPrviewDom(post);
                 var postDom;
+
                 switch (index) {
                   case 0:
                     postDom = (
                       <li key={post.id} className="col-span-full flex flex-col gap-3 content-center">
-                        <div className="flex-none">
-                          <Link href={`/${post.id}`}>
-                            <img className="cursor-pointer" src={thumbnailUrl} />
-                          </Link>
-                        </div>
+                        <div className="flex-none">{postThumbnail}</div>
                         <div className="flex-none">
                           <p className="text-medium text-xs text-neutral-500">{date}</p>
                         </div>
@@ -60,15 +121,9 @@ export default function Home({ posts }) {
                             </Link>
                           </h3>
                         </div>
-                        <div className="shrink">
-                          <p className="text-sm text-neutral-500 leading-relaxed cursor-pointer">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce velit tortor, dictum in gravida nec, aliquet non lorem. Donec vestibulum justo a diam ultricies pellentesque. Quisque mattis diam vel lacus tincidunt elementum.
-                          </p>
-                        </div>
+                        <div className="shrink">{postPreview}</div>
                         <div className="flex-none">
-                          <div className="flex flex-wrap gap-3">
-                            {tags.map(tag => (<div className="blog-link text-xs">#{tag}</div>))}
-                          </div>
+                          {tags}
                         </div>
                       </li>
                     )
@@ -76,9 +131,7 @@ export default function Home({ posts }) {
                   default:
                     postDom = (
                       <li key={post.id} className="flex flex-col gap-3 content-center">
-                        <div className="flex-none">
-                          <div className="h-48 bg-cover bg-center" style={{backgroundImage: "url(" + thumbnailUrl + ")"}} />
-                        </div>
+                        <div className="flex-none">{postThumbnail}</div>
                         <div className="flex-none">
                           <p className="text-medium text-xs text-neutral-500">{date}</p>
                         </div>
@@ -91,21 +144,8 @@ export default function Home({ posts }) {
                             </Link>
                           </h3>
                         </div>
-                        <div className="shrink">
-                          <p className="text-sm text-neutral-500 leading-relaxed">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce velit tortor, dictum in gravida nec, aliquet non lorem. Donec vestibulum justo a diam ultricies pellentesque. Quisque mattis diam vel lacus tincidunt elementum.
-                          </p>
-                        </div>
-                        <div className="flex-none">
-                          <div className="flex flex-wrap gap-3">
-                            {tags.map(tag => (<div className="blog-link text-xs">#{tag}</div>))}
-                          </div>
-                          {/* <div>
-                            <Link href={`/${post.id}`}>
-                              <button className="blog-btn">Read more</button>
-                            </Link>
-                          </div> */}
-                        </div>
+                        <div className="shrink">{postPreview}</div>
+                        <div className="flex-none">{tags}</div>
                       </li>
                     )
                     break;
@@ -127,6 +167,7 @@ export default function Home({ posts }) {
                 );
 
                 const tags = getTags(post);
+                const postPreview = getPostPrviewDom(post);
 
                 return (
                   <li key={post.id} className="flex flex-col gap-3 content-center">
@@ -142,20 +183,9 @@ export default function Home({ posts }) {
                         </Link>
                       </h3>
                     </div>
-                    <div className="shrink">
-                      <p className="text-sm text-neutral-500 leading-relaxed">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce velit tortor, dictum in gravida nec, aliquet non lorem. Donec vestibulum justo a diam ultricies pellentesque. Quisque mattis diam vel lacus tincidunt elementum.
-                      </p>
-                    </div>
+                    <div className="shrink">{postPreview}</div>
                     <div className="flex-none">
-                      <div className="flex flex-wrap gap-3">
-                        {tags.map(tag => (<div className="blog-link text-xs">#{tag}</div>))}
-                      </div>
-                      {/* <div>
-                        <Link href={`/${post.id}`}>
-                          <button className="blog-btn">Read more</button>
-                        </Link>
-                      </div> */}
+                      {tags}
                     </div>
                   </li>
                 );

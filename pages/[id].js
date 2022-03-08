@@ -165,14 +165,44 @@ const renderBlock = (block) => {
   }
 };
 
-export const getTags = (page) => {
+const getCmsType = (post) => {
+  if (!post.properties || !post.properties.cms || !post.properties.cms.select || !post.properties.cms.select.name) {
+    return null;
+  }
+
+  switch (post.properties.cms.select.name) {
+    case "velog":
+      return "Velog";
+    default:
+      return null;
+  }
+};
+
+export const getTags = (page, centerAlign) => {
   if (!page.properties || !page.properties.Tags || page.properties.Tags.type != 'multi_select' || !page.properties.Tags.multi_select) {
     return [];
   }
 
-  const tags = page.properties.Tags.multi_select;
+  const tags = page.properties.Tags.multi_select.map(tag => tag.name);
+  const cmsType = getCmsType(page);
+  var cmsDom = (<></>);
 
-  return tags.map(tag => tag.name);
+  if (cmsType) {
+    cmsDom = (<div className="rounded text-white bg-sky-600 px-2 py-0.5 text-xs">{cmsType}</div>);
+  }
+
+  var centerAlignClass = "";
+
+  if (centerAlign) {
+    centerAlignClass = "justify-center";
+  }
+
+  return (
+    <div className={"flex flex-wrap gap-3 " + centerAlignClass}>
+      {cmsDom}
+      {tags.map(tag => (<div className="blog-link text-xs">#{tag}</div>))}
+    </div>
+  );
 };
 
 export const getPostingDate = (page) => {
@@ -196,7 +226,7 @@ export default function Post({ page, blocks }) {
     return <div />;
   }
 
-  const tags = getTags(page);
+  const tags = getTags(page, true);
   const postingDate = getPostingDate(page);
   const thumbnailUrl = getThumbnailUrl(page);
 
@@ -221,9 +251,7 @@ export default function Post({ page, blocks }) {
         </div>
         <div className="absolute inset-0 z-30">
           <div className="w-4/5 mx-auto text-center text-white pt-28">
-            <div className="flex flex-wrap gap-3 justify-center">
-              {tags.map(tag => (<div className="blog-link text-sm">#{tag}</div>))}
-            </div>
+            {tags}
             <h1 className="text-4xl font-black leading-relaxed break-words post-title">
               <Text text={page.properties.Page.title} />
             </h1>
