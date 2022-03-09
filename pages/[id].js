@@ -325,7 +325,7 @@ export default function Post({ page, blocks }) {
       </article>
 
       <footer>
-        <div className="border-t mt-28 pt-8 pb-12 text-sm">
+        <div className="mt-44 pt-8 pb-12 text-sm">
           (C) 2022. Icednut All rights reserved.
         </div>
       </footer>

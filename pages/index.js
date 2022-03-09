@@ -77,7 +77,7 @@ const getPostThumbnail = (post) => {
   return postThumbnail;
 };
 
-export default function Home({ posts }) {
+export default function Home({ posts, tagCloud }) {
   return (
     <div>
       <Head>
@@ -207,14 +207,36 @@ export default function Home({ posts }) {
                 );
               })}
             </ol>
-            <div className="text-center mt-12">
+            <div className="text-center mt-8">
               <button className="blog-btn">More</button>
+            </div>
+          </div>
+          <div>
+            <div className="flex gap-2 pb-1 mb-4 items-center">
+              <p className="flex-none text-xs text-zinc-400">Tags</p>
+              <div className="h-0.5 w-full border-b border-zinc-300"></div>
+            </div>
+            <div id="tags" className="flex flex-row flex-wrap gap-2 px-4">
+              {
+                Object.keys(tagCloud).map(tag => {
+                  return (
+                    <div className="bg-sky-500 text-white rounded px-4 py-1 flex flex-row flex-wrap gap-2">
+                      <p className="text-sm">#{tag}</p>
+                      {
+                        tagCloud[tag] > 1 ? 
+                          (<p className="bg-sky-100 text-sky-600 rounded-full px-2 text-sm">{tagCloud[tag]}</p>) :
+                          (<p className="hidden px-2 text-sm">{tagCloud[tag]}</p>)
+                      }
+                    </div>
+                  );
+                })
+              }
             </div>
           </div>
         </div>
 
         <footer>
-          <div className="border-t mt-28 pt-8 pb-12 text-sm">
+          <div className="mt-44 pt-8 pb-12 text-sm">
             (C) 2022. Icednut All rights reserved.
           </div>
         </footer>
@@ -237,11 +259,28 @@ export const getStaticProps = async () => {
     } else {
       return 0;
     }
-  })
+  });
+
+  const tagContainer = {};
+  const tags = database.flatMap((post) => post.properties.Tags.multi_select).map((tag) => tag.name);
+
+  for (var tag of tags) {
+    const tagCount = tagContainer[tag];
+    var newTagCount;
+
+    if (!tagCount) {
+      newTagCount = 0;
+    } else {
+      newTagCount = tagCount;
+    }
+
+    tagContainer[tag] = newTagCount + 1;
+  }
 
   return {
     props: {
       posts: database,
+      tagCloud: tagContainer
     },
     revalidate: 1,
   };
