@@ -216,15 +216,15 @@ export default function Home({ posts, tagCloud }) {
               <p className="flex-none text-xs text-zinc-400">Tags</p>
               <div className="h-0.5 w-full border-b border-zinc-300"></div>
             </div>
-            <div id="tags" className="flex flex-row flex-wrap gap-2 px-4">
+            <div id="tags" className="flex flex-row flex-wrap gap-4 px-4">
               {
                 Object.keys(tagCloud).map(tag => {
                   return (
-                    <div className="bg-sky-500 text-white rounded px-4 py-1 flex flex-row flex-wrap gap-2">
-                      <p className="text-sm">#{tag}</p>
+                    <div className="flex flex-row flex-wrap gap-1">
+                      <p className="blog-link text-sm">#{tag}</p>
                       {
                         tagCloud[tag] > 1 ? 
-                          (<p className="bg-sky-100 text-sky-600 rounded-full px-2 text-sm">{tagCloud[tag]}</p>) :
+                          (<p className="bg-sky-500 text-white rounded-full px-2 text-sm">{tagCloud[tag]}</p>) :
                           (<p className="hidden px-2 text-sm">{tagCloud[tag]}</p>)
                       }
                     </div>
