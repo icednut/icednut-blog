@@ -178,7 +178,7 @@ const getCmsType = (post) => {
   }
 };
 
-export const getTags = (page, centerAlign) => {
+export const getTags = (page, additionalCssClass) => {
   if (!page.properties || !page.properties.Tags || page.properties.Tags.type != 'multi_select' || !page.properties.Tags.multi_select) {
     return [];
   }
@@ -191,14 +191,14 @@ export const getTags = (page, centerAlign) => {
     cmsDom = (<div className="rounded text-white bg-sky-600 px-2 py-0.5 text-xs">{cmsType}</div>);
   }
 
-  var centerAlignClass = "";
+  var cssClass = additionalCssClass;
 
-  if (centerAlign) {
-    centerAlignClass = "justify-center";
+  if (!cssClass) {
+    cssClass = "text-sm";
   }
 
   return (
-    <div className={"flex flex-wrap gap-3 " + centerAlignClass}>
+    <div className={"flex flex-wrap gap-3 " + cssClass}>
       {cmsDom}
       {tags.map(tag => (<div className="blog-link text-xs">#{tag}</div>))}
     </div>
@@ -226,7 +226,7 @@ export default function Post({ page, blocks }) {
     return <div />;
   }
 
-  const tags = getTags(page, true);
+  const tags = getTags(page, "text-lg justify-center");
   const postingDate = getPostingDate(page);
   const thumbnailUrl = getThumbnailUrl(page);
 
@@ -252,7 +252,7 @@ export default function Post({ page, blocks }) {
         <div className="absolute inset-0 z-30">
           <div className="w-4/5 mx-auto text-center text-white pt-28">
             {tags}
-            <h1 className="text-4xl font-black leading-relaxed break-words post-title">
+            <h1 className="text-4xl font-black leading-relaxed break-words post-content-title">
               <Text text={page.properties.Page.title} />
             </h1>
             <p className="opacity-60">

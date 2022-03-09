@@ -8,7 +8,7 @@ export const databaseId = process.env.NOTION_DATABASE_ID;
 
 const getExtraContentUrl = (post) => {
   if (!post.properties || !post.properties.cms || !post.properties.cms.select || !post.properties.cms.select.name) {
-    return "";
+    return `/${post.id}`;
   }
   var extraContentUrl;
   switch (post.properties.cms.select.name) {
@@ -16,6 +16,7 @@ const getExtraContentUrl = (post) => {
       extraContentUrl = post.properties.extra_contents.rich_text[0].href;
       break;
     default:
+      extraContentUrl = `/${post.id}`;
       break;
   }
   return extraContentUrl;
@@ -102,6 +103,7 @@ export default function Home({ posts }) {
                 const tags = getTags(post);
                 const postThumbnail = getPostThumbnail(post);
                 const postPreview = getPostPrviewDom(post);
+                const postUrl = getExtraContentUrl(post);
                 var postDom;
 
                 switch (index) {
@@ -114,7 +116,7 @@ export default function Home({ posts }) {
                         </div>
                         <div className="flex-none">
                           <h3>
-                            <Link href={`/${post.id}`}>
+                            <Link href={postUrl}>
                               <p className="font-bold text-lg text-black cursor-pointer post-title">
                                 <Text text={post.properties.Page.title} />
                               </p>
@@ -137,7 +139,7 @@ export default function Home({ posts }) {
                         </div>
                         <div className="flex-none">
                           <h3>
-                            <Link href={`/${post.id}`}>
+                            <Link href={postUrl}>
                               <p className="font-bold text-lg text-black cursor-pointer post-title">
                                 <Text text={post.properties.Page.title} />
                               </p>
@@ -168,6 +170,9 @@ export default function Home({ posts }) {
 
                 const tags = getTags(post);
                 const postPreview = getPostPrviewDom(post);
+                const postUrl = getExtraContentUrl(post);
+
+                console.log('postUrl', postUrl);
 
                 return (
                   <li key={post.id} className="flex flex-col gap-3 content-center">
@@ -176,7 +181,7 @@ export default function Home({ posts }) {
                     </div>
                     <div className="flex-none">
                       <h3>
-                        <Link href={`/${post.id}`}>
+                        <Link href={postUrl}>
                           <p className="font-bold text-lg text-black cursor-pointer post-title">
                             <Text text={post.properties.Page.title} />
                           </p>
@@ -200,6 +205,19 @@ export default function Home({ posts }) {
 
 export const getStaticProps = async () => {
   const database = await getDatabase(databaseId);
+
+  database.sort((post1, post2) => {
+    const date1 = new Date(getPostingDate(post1));
+    const date2 = new Date(getPostingDate(post2));
+
+    if (date1 > date2) {
+      return 1;
+    } else if (date1 < date2) {
+      return -1;
+    } else {
+      return 0;
+    }
+  })
 
   return {
     props: {
