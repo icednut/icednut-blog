@@ -26,11 +26,11 @@ export const Text = ({ text }) => {
     return (
       <span
         className={[
-          bold ? styles.bold : "",
+          bold ? "font-bold" : "",
           code ? styles.code : "",
-          italic ? styles.italic : "",
-          strikethrough ? styles.strikethrough : "",
-          underline ? styles.underline : "",
+          italic ? "italic" : "",
+          strikethrough ? "line-through" : "",
+          underline ? "underline" : "",
         ].join(" ")}
         style={color !== "default" ? { color } : {}}
       >
@@ -47,32 +47,32 @@ const renderBlock = (block) => {
   switch (type) {
     case "paragraph":
       return (
-        <p>
+        <p className="pb-1">
           <Text text={value.text} />
         </p>
       );
     case "heading_1":
       return (
-        <h2 className="text-2xl mt-6 mb-1 font-bold">
+        <h2 className="text-2xl mt-6 mb-2 font-bold border-l-4 pl-2 border-slate-600">
           <Text text={value.text} />
         </h2>
       );
     case "heading_2":
       return (
-        <h3 className="text-xl mt-4 mb-1 font-bold"> 
+        <h3 className="text-xl mt-4 mb-2 font-bold border-l-2 pl-2 border-slate-400">
           <Text text={value.text} />
         </h3>
       );
     case "heading_3":
       return (
-        <h4 className="text-lg mt-3 mb-1 font-bold">
+        <h4 className="text-lg mt-3 mb-2 font-bold">
           <Text text={value.text} />
         </h4>
       );
     case "bulleted_list_item":
     case "numbered_list_item":
       return (
-        <li>
+        <li className="pb-1">
           <Text text={value.text} />
         </li>
       );
@@ -148,10 +148,9 @@ const renderBlock = (block) => {
           emoji = '';
           break;
       }
-      //  console.log(emoji, value)
 
       return (
-        <pre className="whitespace-pre-line flex bg-slate-600 text-white font-medium p-4 rounded text-base" key={id}>
+        <pre className="whitespace-pre-line flex bg-zinc-600 text-white font-medium px-4 py-3 mt-1 rounded text-base overflow-auto" key={id}>
           <div className="flex-none w-8">{emoji}</div>
           <p className="shrink">
             {value.text[0].plain_text}
@@ -210,7 +209,14 @@ export const getPostingDate = (page) => {
     return 'unknown';
   }
 
-  return page.properties.Date.date.start;
+  return new Date(page.properties.Date.date.start).toLocaleString(
+    "en-US",
+    {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    }
+  );
 };
 
 export const getThumbnailUrl = (page) => {
@@ -274,7 +280,14 @@ export default function Post({ page, blocks }) {
         </div>
         <div className="h-screen">
         </div>
-        <div id="post-content-start" className="h-36"></div>
+        <div id="post-content-start" className="invisible py-6 flex flex-col md:flex-row lg:flex-row">
+          <div className="justify-between">
+            <p className="post-content-title flex-none">Icednut's Space</p>
+          </div>
+          <div className="post-title grow font-bold">
+            <Text text={page.properties.Page.title} />
+          </div>
+        </div>
         <div className="fixed top-0 inset-x-0 px-8 py-5 bg-white drop-shadow-md z-10 flex flex-col md:flex-row lg:flex-row gap-2">
           <div className="flex flex-row justify-between">
             <p className="post-content-title flex-none">Icednut's Space</p>
@@ -293,7 +306,7 @@ export default function Post({ page, blocks }) {
             </div>
           </div>
           <p className="hidden md:block lg:block">·</p>
-          <div className={`post-title ${isVisiblePostTitle ? 'block' : 'hidden'} md:block lg:block`}>
+          <div className={`post-title ${isVisiblePostTitle ? 'block' : 'hidden'} grow md:block lg:block font-bold text-slate-500`}>
             <Text text={page.properties.Page.title} />
           </div>
         </div>
@@ -303,9 +316,9 @@ export default function Post({ page, blocks }) {
               <Fragment key={block.id}>{renderBlock(block)}</Fragment>
             ))}
           </div>
-          <div id="post-footer" className="py-4 mt-10">
+          <div id="post-footer" className="py-4 mt-10 text-center">
             <Link href="/">
-              <a className="blog-link">Home</a>
+              <button className="blog-btn">Home</button>
             </Link>
           </div>
         </section>

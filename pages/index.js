@@ -37,7 +37,7 @@ const getPostPrviewDom = (post) => {
       break;
     default:
       postPreview = (
-        <p className="text-sm text-neutral-400 leading-relaxed cursor-pointer">
+        <p className="text-base text-neutral-400 leading-relaxed">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce velit tortor, dictum in gravida nec, aliquet non lorem. Donec vestibulum justo a diam ultricies pellentesque. Quisque mattis diam vel lacus tincidunt elementum.
         </p>
       );
@@ -51,7 +51,7 @@ const getPostThumbnail = (post) => {
   const thumbnailUrl = getThumbnailUrl(post);
   var postThumbnail = (
     <Link href={`/${post.id}`}>
-      <div className="w-full h-64 bg-cover bg-center cursor-pointer" style={{backgroundImage: "url(" + thumbnailUrl + ")"}} />
+      <div className="w-full h-64 cursor-pointer bg-cover bg-center" style={{backgroundImage: "url(" + thumbnailUrl + ")"}} />
     </Link>
   );
 
@@ -65,10 +65,8 @@ const getPostThumbnail = (post) => {
     case "velog":
       postThumbnail = (
         <Link href={extraContentUrl}>
-          <div className="bg-slate-200 grid grid-cols-3 gap-4 place-content-center place-items-center h-64 cursor-pointer">
-            <div className="h-28"></div>
-            <div className="h-28 text-8xl text-slate-600 text-center">Velog</div>
-            <div className="h-28"></div>
+          <div className="bg-slate-200 flex flex-col justify-center h-64 cursor-pointer">
+            <div className="text-6xl md:text-8xl lg:text-8xl text-slate-600 text-center">Velog</div>
           </div>
         </Link>
       );
@@ -87,31 +85,38 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="px-6">
+      <main className="px-4">
         <header>
           <div className="fixed px-8 py-5 inset-x-0 bg-white drop-shadow-md flex flex-row justify-between">
-            <p className="post-content-title">Icednut's Space</p>
-            <div className="flex flex-row gap-4">
+            <Link href="/">
+              <p className="post-content-title cursor-pointer">Icednut's Space</p>
+            </Link>
+            <div className="flex flex-row gap-5">
               <p className="">About</p>
-              <p className="">Blog</p>
+              <Link href="/">
+                <p className="cursor-pointer">Blog</p>
+              </Link>
+              <p className="">Life</p>
             </div>
           </div>
-          <div className="h-24"></div>
+          <div className="h-28"></div>
         </header>
 
-        <div className="grid grid-cols-1 divide-y divide-slate-200">
-          <div className="pb-12">
-            <ol className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-24">
+          <div className="h-52 grid grid-cols-1 items-center content-center gap-4 px-6 break-normal">
+            <h1 className="text-2xl text-center">Blog</h1>
+            <p className="text-base text-neutral-400 leading-relaxed text-center">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+          <div>
+            <div className="flex gap-2 pb-1 mb-4 items-center">
+              <p className="flex-none text-xs text-zinc-400">Recent Posts</p>
+              <div className="h-0.5 w-full border-b border-zinc-300"></div>
+            </div>
+            <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
               {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index <= 2).map((post, index) => {
-                const date = new Date(getPostingDate(post)).toLocaleString(
-                  "en-US",
-                  {
-                    month: "short",
-                    day: "2-digit",
-                    year: "numeric",
-                  }
-                );
-
+                const date = getPostingDate(post);
                 const tags = getTags(post);
                 const postThumbnail = getPostThumbnail(post);
                 const postPreview = getPostPrviewDom(post);
@@ -124,7 +129,7 @@ export default function Home({ posts }) {
                       <li key={post.id} className="col-span-full flex flex-col gap-2 content-center">
                         <div className="flex-none">{postThumbnail}</div>
                         <div className="flex-none">
-                          <p className="text-medium text-xs text-neutral-500">{date}</p>
+                          <p className="text-medium text-xs text-zinc-700">{date}</p>
                         </div>
                         <div className="flex-none">
                           <h3>
@@ -147,7 +152,7 @@ export default function Home({ posts }) {
                       <li key={post.id} className="flex flex-col gap-2 content-center">
                         <div className="flex-none">{postThumbnail}</div>
                         <div className="flex-none">
-                          <p className="text-medium text-xs text-neutral-500">{date}</p>
+                          <p className="text-medium text-sm text-zinc-700">{date}</p>
                         </div>
                         <div className="flex-none">
                           <h3>
@@ -168,18 +173,14 @@ export default function Home({ posts }) {
               })}
             </ol>
           </div>
-          <div className="pt-6">
-            <ol className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div>
+            <div className="flex gap-2 pb-1 mb-4 items-center">
+              <p className="flex-none text-xs text-zinc-400">All Posts</p>
+              <div className="h-0.5 w-full border-b border-zinc-300"></div>
+            </div>
+            <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
               {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index > 2).map((post, index) => {
-                const date = new Date(getPostingDate(post)).toLocaleString(
-                  "en-US",
-                  {
-                    month: "short",
-                    day: "2-digit",
-                    year: "numeric",
-                  }
-                );
-
+                const date = getPostingDate(post);
                 const tags = getTags(post);
                 const postPreview = getPostPrviewDom(post);
                 const postUrl = getExtraContentUrl(post);
@@ -187,7 +188,7 @@ export default function Home({ posts }) {
                 return (
                   <li key={post.id} className="flex flex-col gap-2 content-center">
                     <div className="flex-none">
-                      <p className="text-medium text-xs text-neutral-500">{date}</p>
+                      <p className="text-medium text-sm text-zinc-700">{date}</p>
                     </div>
                     <div className="flex-none">
                       <h3>
@@ -206,6 +207,9 @@ export default function Home({ posts }) {
                 );
               })}
             </ol>
+            <div className="text-center mt-12">
+              <button className="blog-btn">More</button>
+            </div>
           </div>
         </div>
 

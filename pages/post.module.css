@@ -1,4 +1,4 @@
-.container {
+/* .container {
   padding: 0 20px;
   max-width: 700px;
   margin: 0 auto;
@@ -17,44 +17,7 @@
 
 .container figcaption {
   opacity: 0.6;
-}
-
-.name {
-  font-size: 36px;
-}
-
-.back {
-  display: inline-block;
-  margin-bottom: 20px;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.code {
-  font-family: monospace;
-  background-color: rgb(242, 242, 242);
-  padding: 2px 4px;
-  border-radius: 2px;
-}
-
-.italic {
-  font-style: italic;
-}
-
-.pre {
-  /* background-color: rgb(242, 242, 242); */
-  overflow: auto;
-}
-
-.callout {
-  white-space: pre-line;
-}
-
-.code_block {
-  font-family: monospace;
-}
+} */
 
 .file {
   padding: 2px 4px;
@@ -69,18 +32,6 @@
   background: rgba(55, 53, 47, 0.08);
   cursor: pointer;
   border-radius: 2px;
-}
-
-.italic {
-  font-style: italic;
-}
-
-.strikethrough {
-  text-decoration: line-through;
-}
-
-.underline {
-  text-decoration: underline;
 }
 
 /* @media (prefers-color-scheme: dark) {
