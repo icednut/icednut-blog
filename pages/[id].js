@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Head from "next/head";
 import { getDatabase, getPage, getBlocks } from "../lib/notion";
 import Link from "next/link";
@@ -230,6 +230,11 @@ export default function Post({ page, blocks }) {
   const postingDate = getPostingDate(page);
   const thumbnailUrl = getThumbnailUrl(page);
 
+  const [isVisiblePostTitle, setVisiblePostTitle] = useState(true);
+  const togglePostTitle = () => {
+    setVisiblePostTitle(!isVisiblePostTitle);
+  };
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       Prism.plugins.autoloader.languages_path = '/prism-grammers/';
@@ -238,21 +243,21 @@ export default function Post({ page, blocks }) {
   }, []);
 
   return (
-    <div>
+    <div className="px-6">
       <Head>
         <title>{page.properties.Page.title[0].plain_text}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <article className="leading-loose px-6 mb-10">
+      <article className="leading-loose">
         <div className="absolute inset-0 text-center py-10 bg-cover bg-center z-20" style={{backgroundImage: "url(" + thumbnailUrl + ")"}}>
         </div>
         <div className="absolute inset-0 bg-black opacity-70 z-20">
         </div>
         <div className="absolute inset-0 z-30 flex flex-col justify-between">
-          <div className="text-white p-28">
+          <div className="text-white px-6 py-16 md:px-28 md:py-28 lg:px-28 lg:py-28">
             {tags}
-            <h1 className="text-4xl leading-relaxed break-words post-content-title text-center">
+            <h1 className="w-full text-4xl leading-relaxed post-content-title text-center break-normal">
               <Text text={page.properties.Page.title} />
             </h1>
             <p className="text-zinc-400 text-center">
@@ -269,11 +274,26 @@ export default function Post({ page, blocks }) {
         </div>
         <div className="h-screen">
         </div>
-        <div id="post-content-start" className="h-14"></div>
-        <div className="fixed top-0 inset-x-0 px-8 py-3 bg-white drop-shadow-md z-10 flex flex-row gap-3">
-          <p className="post-content-title flex-none">Icednut's Space</p>
-          <p>·</p>
-          <div className="post-title">
+        <div id="post-content-start" className="h-36"></div>
+        <div className="fixed top-0 inset-x-0 px-8 py-5 bg-white drop-shadow-md z-10 flex flex-col md:flex-row lg:flex-row gap-2">
+          <div className="flex flex-row justify-between">
+            <p className="post-content-title flex-none">Icednut's Space</p>
+            <div className="block md:hidden lg:hidden" onClick={togglePostTitle}>
+              {
+                isVisiblePostTitle ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                )
+              }
+            </div>
+          </div>
+          <p className="hidden md:block lg:block">·</p>
+          <div className={`post-title ${isVisiblePostTitle ? 'block' : 'hidden'} md:block lg:block`}>
             <Text text={page.properties.Page.title} />
           </div>
         </div>

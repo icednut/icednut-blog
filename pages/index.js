@@ -89,7 +89,7 @@ export default function Home({ posts }) {
 
       <main className="px-6">
         <header>
-          <div className="fixed px-8 py-3 inset-x-0 bg-white drop-shadow-md flex flex-row justify-between">
+          <div className="fixed px-8 py-5 inset-x-0 bg-white drop-shadow-md flex flex-row justify-between">
             <p className="post-content-title">Icednut's Space</p>
             <div className="flex flex-row gap-4">
               <p className="">About</p>
