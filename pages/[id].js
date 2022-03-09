@@ -188,19 +188,19 @@ export const getTags = (page, additionalCssClass) => {
   var cmsDom = (<></>);
 
   if (cmsType) {
-    cmsDom = (<div className="rounded text-white bg-sky-600 px-2 py-0.5 text-xs">{cmsType}</div>);
+    cmsDom = (<div className="rounded text-white bg-sky-600 px-2 py-0.5">{cmsType}</div>);
   }
 
   var cssClass = additionalCssClass;
 
   if (!cssClass) {
-    cssClass = "text-sm";
+    cssClass = "font-bold text-xs";
   }
 
   return (
-    <div className={"flex flex-wrap gap-3 " + cssClass}>
+    <div className={"flex flex-wrap gap-2 " + cssClass}>
       {cmsDom}
-      {tags.map(tag => (<div className="blog-link text-xs">#{tag}</div>))}
+      {tags.map(tag => (<div className="blog-link">#{tag}</div>))}
     </div>
   );
 };
@@ -226,7 +226,7 @@ export default function Post({ page, blocks }) {
     return <div />;
   }
 
-  const tags = getTags(page, "text-lg justify-center");
+  const tags = getTags(page, "font-bold text-base justify-center");
   const postingDate = getPostingDate(page);
   const thumbnailUrl = getThumbnailUrl(page);
 
@@ -249,35 +249,53 @@ export default function Post({ page, blocks }) {
         </div>
         <div className="absolute inset-0 bg-black opacity-70 z-20">
         </div>
-        <div className="absolute inset-0 z-30">
-          <div className="w-4/5 mx-auto text-center text-white pt-28">
+        <div className="absolute inset-0 z-30 flex flex-col justify-between">
+          <div className="text-white p-28">
             {tags}
-            <h1 className="text-4xl font-black leading-relaxed break-words post-content-title">
+            <h1 className="text-4xl leading-relaxed break-words post-content-title text-center">
               <Text text={page.properties.Page.title} />
             </h1>
-            <p className="opacity-60">
+            <p className="text-zinc-400 text-center">
               {postingDate}
             </p>
           </div>
+          <div className="text-white py-8">
+            <a href="#post-content-start">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+          </div>
         </div>
-        <div className="h-screen mb-16">
+        <div className="h-screen">
         </div>
-        <div className="fixed top-0 inset-x-0 px-4 py-2 bg-white drop-shadow-md post-title z-10">
-          <Text text={page.properties.Page.title} />
+        <div id="post-content-start" className="h-14"></div>
+        <div className="fixed top-0 inset-x-0 px-8 py-3 bg-white drop-shadow-md z-10 flex flex-row gap-3">
+          <p className="post-content-title flex-none">Icednut's Space</p>
+          <p>·</p>
+          <div className="post-title">
+            <Text text={page.properties.Page.title} />
+          </div>
         </div>
         <section>
-          <div id="post-content" className="line-numbers">
+          <div className="line-numbers">
             {blocks.map((block) => (
               <Fragment key={block.id}>{renderBlock(block)}</Fragment>
             ))}
           </div>
-          <div id="post-footer" className="py-4">
+          <div id="post-footer" className="py-4 mt-10">
             <Link href="/">
               <a className="blog-link">Home</a>
             </Link>
           </div>
         </section>
       </article>
+
+      <footer>
+        <div className="border-t mt-28 pt-8 pb-12 text-sm">
+          (C) 2022. Icednut All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 }

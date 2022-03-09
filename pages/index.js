@@ -23,17 +23,25 @@ const getExtraContentUrl = (post) => {
 };
 
 const getPostPrviewDom = (post) => {
-  const extraContentUrl = getExtraContentUrl(post);
-  var postPreview;
-  
-  if (!extraContentUrl) {
-    postPreview = (
-      <p className="text-sm text-neutral-500 leading-relaxed cursor-pointer">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce velit tortor, dictum in gravida nec, aliquet non lorem. Donec vestibulum justo a diam ultricies pellentesque. Quisque mattis diam vel lacus tincidunt elementum.
-      </p>
-    );
+  var postType = 'default';
+  var postPreview = (<div className="invisible"></div>);
+
+  if (!post.properties || !post.properties.cms || !post.properties.cms.select || !post.properties.cms.select.name) {
+    postType = 'default';
   } else {
-    postPreview = (<></>);
+    postType = post.properties.cms.select.name;
+  }
+
+  switch (postType) {
+    case "velog":
+      break;
+    default:
+      postPreview = (
+        <p className="text-sm text-neutral-400 leading-relaxed cursor-pointer">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce velit tortor, dictum in gravida nec, aliquet non lorem. Donec vestibulum justo a diam ultricies pellentesque. Quisque mattis diam vel lacus tincidunt elementum.
+        </p>
+      );
+      break;
   }
 
   return postPreview;
@@ -79,17 +87,21 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <header className={styles.header}>
-          <div className={styles.logos}>
-            Icednut's Space
+      <main className="px-6">
+        <header>
+          <div className="fixed px-8 py-3 inset-x-0 bg-white drop-shadow-md flex flex-row justify-between">
+            <p className="post-content-title">Icednut's Space</p>
+            <div className="flex flex-row gap-4">
+              <p className="">About</p>
+              <p className="">Blog</p>
+            </div>
           </div>
-          <p>리뉴얼 준비 중 입니다.</p>
+          <div className="h-24"></div>
         </header>
 
-        <div className="grid grid-cols-1 divide-y divide-slate-200 gap-8">
-          <div>
-            <ol className="list-none p-6 mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 divide-y divide-slate-200">
+          <div className="pb-12">
+            <ol className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
               {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index <= 2).map((post, index) => {
                 const date = new Date(getPostingDate(post)).toLocaleString(
                   "en-US",
@@ -109,7 +121,7 @@ export default function Home({ posts }) {
                 switch (index) {
                   case 0:
                     postDom = (
-                      <li key={post.id} className="col-span-full flex flex-col gap-3 content-center">
+                      <li key={post.id} className="col-span-full flex flex-col gap-2 content-center">
                         <div className="flex-none">{postThumbnail}</div>
                         <div className="flex-none">
                           <p className="text-medium text-xs text-neutral-500">{date}</p>
@@ -132,7 +144,7 @@ export default function Home({ posts }) {
                     break;
                   default:
                     postDom = (
-                      <li key={post.id} className="flex flex-col gap-3 content-center">
+                      <li key={post.id} className="flex flex-col gap-2 content-center">
                         <div className="flex-none">{postThumbnail}</div>
                         <div className="flex-none">
                           <p className="text-medium text-xs text-neutral-500">{date}</p>
@@ -156,8 +168,8 @@ export default function Home({ posts }) {
               })}
             </ol>
           </div>
-          <div>
-            <ol className="list-none p-6 mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="pt-6">
+            <ol className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
               {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index > 2).map((post, index) => {
                 const date = new Date(getPostingDate(post)).toLocaleString(
                   "en-US",
@@ -172,10 +184,8 @@ export default function Home({ posts }) {
                 const postPreview = getPostPrviewDom(post);
                 const postUrl = getExtraContentUrl(post);
 
-                console.log('postUrl', postUrl);
-
                 return (
-                  <li key={post.id} className="flex flex-col gap-3 content-center">
+                  <li key={post.id} className="flex flex-col gap-2 content-center">
                     <div className="flex-none">
                       <p className="text-medium text-xs text-neutral-500">{date}</p>
                     </div>
@@ -198,6 +208,12 @@ export default function Home({ posts }) {
             </ol>
           </div>
         </div>
+
+        <footer>
+          <div className="border-t mt-28 pt-8 pb-12 text-sm">
+            (C) 2022. Icednut All rights reserved.
+          </div>
+        </footer>
       </main>
     </div>
   );
@@ -211,9 +227,9 @@ export const getStaticProps = async () => {
     const date2 = new Date(getPostingDate(post2));
 
     if (date1 > date2) {
-      return 1;
-    } else if (date1 < date2) {
       return -1;
+    } else if (date1 < date2) {
+      return 1;
     } else {
       return 0;
     }
