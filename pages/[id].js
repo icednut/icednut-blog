@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import Head from "next/head";
-import { getDatabase, getPage, getBlocks } from "../lib/notion";
+import { getDatabase, getTagCloud, getPostingDate, getPage, getBlocks } from "../lib/notion";
 import Link from "next/link";
 import { databaseId } from "./index.js";
 import styles from "./post.module.css";
@@ -204,21 +204,6 @@ export const getTags = (page, additionalCssClass) => {
   );
 };
 
-export const getPostingDate = (page) => {
-  if (!page.properties || !page.properties.Date || page.properties.Date.type != 'date' || !page.properties.Date.date || !page.properties.Date.date.start) {
-    return 'unknown';
-  }
-
-  return new Date(page.properties.Date.date.start).toLocaleString(
-    "en-US",
-    {
-      month: "short",
-      day: "2-digit",
-      year: "numeric",
-    }
-  );
-};
-
 export const getThumbnailUrl = (page) => {
   if (!page.cover || !page.cover.external || !page.cover.external.url) {
     return ''; // TODO: default image url
@@ -227,12 +212,13 @@ export const getThumbnailUrl = (page) => {
   return page.cover.external.url;
 };
 
-export default function Post({ page, blocks }) {
+export default function Post({ page, blocks, tagCloud, previousPost, nextPost }) {
   if (!page || !blocks) {
     return <div />;
   }
 
   const tags = getTags(page, "font-bold text-base justify-center");
+  const footerTags = getTags(page, "font-bold text-base"); // TODO: 이거 하나로 합치기
   const postingDate = getPostingDate(page);
   const thumbnailUrl = getThumbnailUrl(page);
 
@@ -315,17 +301,73 @@ export default function Post({ page, blocks }) {
             {blocks.map((block) => (
               <Fragment key={block.id}>{renderBlock(block)}</Fragment>
             ))}
+            <div className="mt-10">
+              {footerTags}
+            </div>
+            <div className="w-full h-52 mt-6 bg-slate-200 p-4 rounded">comment</div>
           </div>
-          <div id="post-footer" className="py-4 mt-10 text-center">
+          <div id="post-footer" className="py-4 mt-16 flex flex-col justify-center">
+            <div className="flex flex-col md:flex-row lg:flex-row justify-between mb-10 gap-4">
+              <div className="flex flex-col justify-start">
+                <p className="text-xs text-zinc-500">Previous</p>
+                {
+                  previousPost ? (
+                    <Link href={`/${previousPost.id}`}>
+                      <a className="blog-link">
+                        <p>{previousPost.properties.Page.title[0].plain_text}</p>
+                      </a>
+                    </Link>
+                  ) : (
+                    <p>없음</p>
+                  )
+                }
+              </div>
+              <div className="flex flex-col">
+                <p className="text-xs text-zinc-500 text-left md:text-right lg:text-right">Next</p>
+                {
+                  nextPost ? (
+                    <Link href={`/${nextPost.id}`}>
+                      <a className="blog-link">
+                        <p>{nextPost.properties.Page.title[0].plain_text}</p>
+                      </a>
+                    </Link>
+                  ) : (
+                    <p>없음</p>
+                  )
+                }
+              </div>
+            </div>
             <Link href="/">
               <button className="blog-btn">Home</button>
             </Link>
+          </div>
+          <div className="mt-24">
+            <div className="flex gap-2 pb-1 mb-4 items-center">
+              <p className="flex-none text-xs text-zinc-400">All Tags</p>
+              <div className="h-0.5 w-full border-b border-zinc-300"></div>
+            </div>
+            <div id="tags" className="flex flex-row flex-wrap gap-4 px-4">
+              {
+                Object.keys(tagCloud).map(tag => {
+                  return (
+                    <div className="flex flex-row flex-wrap gap-1">
+                      <p className="blog-link text-sm">#{tag}</p>
+                      {
+                        tagCloud[tag] > 1 ? 
+                          (<p className="bg-sky-500 text-white rounded-full px-2 text-sm">{tagCloud[tag]}</p>) :
+                          (<p className="hidden px-2 text-sm">{tagCloud[tag]}</p>)
+                      }
+                    </div>
+                  );
+                })
+              }
+            </div>
           </div>
         </section>
       </article>
 
       <footer>
-        <div className="mt-44 pt-8 pb-12 text-sm">
+        <div className="mt-44 pt-8 pb-12 text-sm text-right">
           (C) 2022. Icednut All rights reserved.
         </div>
       </footer>
@@ -343,8 +385,25 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const { id } = context.params;
+  const posts = await getDatabase(databaseId);
   const page = await getPage(id);
   const blocks = await getBlocks(id);
+  const tagCloud = getTagCloud(posts);
+
+  const currentPostIndex = posts.findIndex((post) => post.id == id);
+  let previousPost = null;
+  let nextPost = null;
+
+  if (currentPostIndex || currentPostIndex === 0) {
+    if (currentPostIndex == 0) {
+      nextPost = posts[currentPostIndex + 1];
+    } else if (currentPostIndex == posts.length - 1) {
+      previousPost = posts[currentPostIndex - 1];
+    } else {
+      nextPost = posts[currentPostIndex + 1];
+      previousPost = posts[currentPostIndex - 1];
+    }
+  }
 
   // Retrieve block children for nested blocks (one level deep), for example toggle blocks
   // https://developers.notion.com/docs/working-with-page-content#reading-nested-blocks
@@ -372,6 +431,9 @@ export const getStaticProps = async (context) => {
     props: {
       page,
       blocks: blocksWithChildren,
+      tagCloud,
+      previousPost,
+      nextPost
     },
     revalidate: 1,
   };

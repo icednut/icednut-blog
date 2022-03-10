@@ -1,8 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import { getDatabase } from "../lib/notion";
-import { Text, getPostingDate, getTags, getThumbnailUrl } from "./[id].js";
-import styles from "./index.module.css";
+import { getDatabase, getPostingDate, getTagCloud } from "../lib/notion";
+import { Text, getTags, getThumbnailUrl } from "./[id].js";
 
 export const databaseId = process.env.NOTION_DATABASE_ID;
 
@@ -207,8 +206,8 @@ export default function Home({ posts, tagCloud }) {
                 );
               })}
             </ol>
-            <div className="text-center mt-8">
-              <button className="blog-btn">More</button>
+            <div className="text-center mt-12">
+              <button className="blog-btn w-full">More</button>
             </div>
           </div>
           <div>
@@ -236,7 +235,7 @@ export default function Home({ posts, tagCloud }) {
         </div>
 
         <footer>
-          <div className="mt-44 pt-8 pb-12 text-sm">
+          <div className="mt-44 pt-8 pb-12 text-sm text-right">
             (C) 2022. Icednut All rights reserved.
           </div>
         </footer>
@@ -247,40 +246,12 @@ export default function Home({ posts, tagCloud }) {
 
 export const getStaticProps = async () => {
   const database = await getDatabase(databaseId);
-
-  database.sort((post1, post2) => {
-    const date1 = new Date(getPostingDate(post1));
-    const date2 = new Date(getPostingDate(post2));
-
-    if (date1 > date2) {
-      return -1;
-    } else if (date1 < date2) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
-
-  const tagContainer = {};
-  const tags = database.flatMap((post) => post.properties.Tags.multi_select).map((tag) => tag.name);
-
-  for (var tag of tags) {
-    const tagCount = tagContainer[tag];
-    var newTagCount;
-
-    if (!tagCount) {
-      newTagCount = 0;
-    } else {
-      newTagCount = tagCount;
-    }
-
-    tagContainer[tag] = newTagCount + 1;
-  }
+  const tagCloud = getTagCloud(database);
 
   return {
     props: {
       posts: database,
-      tagCloud: tagContainer
+      tagCloud: tagCloud
     },
     revalidate: 1,
   };
