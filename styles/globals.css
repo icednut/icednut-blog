@@ -41,7 +41,7 @@ code {
 }
 
 body {
-    @apply container mx-auto;
+    @apply container mx-auto bg-white dark:bg-black;
     font-family: 'GowunDodum-Regular';
 	word-break: break-all;
 }
@@ -58,9 +58,9 @@ a, .blog-link {
 	font-family: 'Cafe24Ohsquare';
 }
 
-li {
-	list-style-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='6' height='14' viewBox='-1 -1 2 2'><circle r='0.5' /></svg>");
-	@apply pl-1;
+li.list-dot::before {
+	content: "\2022";
+	@apply w-4 text-sky-600 font-bold inline-block;
 }
 
 .blog-btn {

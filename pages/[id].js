@@ -28,10 +28,10 @@ export const Text = ({ text }) => {
       <span
         className={[
           bold ? "font-bold" : "",
-          code ? styles.codetext : "",
+          code ? styles.codetext + " text-sm bg-slate-200 dark:bg-slate-700 text-red-600 dark:text-red-300 px-1.5 py-0.5 rounded align-middle" : "text-black dark:text-white",
           italic ? "italic" : "",
           strikethrough ? "line-through" : "",
-          underline ? "underline" : "",
+          underline ? "underline" : ""
         ].join(" ")}
         style={color !== "default" ? { color } : {}}
       >
@@ -73,7 +73,7 @@ const renderBlock = (block) => {
     case "bulleted_list_item":
     case "numbered_list_item":
       return (
-        <li className="pb-1">
+        <li className="pb-1 list-dot list-none">
           <Text text={value.text} />
         </li>
       );
@@ -194,7 +194,7 @@ export const getTags = (page, additionalCssClass) => {
   var cssClass = additionalCssClass;
 
   if (!cssClass) {
-    cssClass = "font-bold text-sm";
+    cssClass = "font-bold text-sm text-black dark:text-white";
   }
 
   return (
@@ -218,14 +218,33 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
     return <div />;
   }
 
-  const tags = getTags(page, "font-bold text-base justify-center");
-  const footerTags = getTags(page, "font-bold text-base"); // TODO: 이거 하나로 합치기
+  const tags = getTags(page, "font-bold text-base justify-center text-white");
+  const footerTags = getTags(page, "font-bold text-base text-black dark:text-white"); // TODO: 이거 하나로 합치기
   const postingDate = getPostingDate(page);
   const thumbnailUrl = getThumbnailUrl(page);
 
   const [isVisiblePostTitle, setVisiblePostTitle] = useState(true);
+  const [theme, setTheme] = useState("");
+
   const togglePostTitle = () => {
     setVisiblePostTitle(!isVisiblePostTitle);
+  };
+
+  const toggleTheme = () => {
+    const themeFromLocalStorage = localStorage.getItem("icednut-theme");
+
+    if (themeFromLocalStorage === 'dark') {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      localStorage.setItem("icednut-theme", "light");
+      setTheme("light");
+    } else {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      localStorage.setItem("icednut-theme", "dark");
+      setTheme("dark");
+    }
+    console.log(localStorage.getItem("icednut-theme"), theme);
   };
 
   useEffect(() => {
@@ -233,6 +252,12 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
       Prism.plugins.autoloader.languages_path = '/prism-grammers/';
       Prism.highlightAll();
     }
+
+    const currentTheme = localStorage.getItem("icednut-theme") || (window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light");
+
+    console.log("currentTheme", currentTheme);
+    document.documentElement.classList.add(currentTheme);
+    setTheme(currentTheme);
   }, []);
 
   return (
@@ -249,10 +274,10 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
           <div className="absolute inset-0 bg-black opacity-70 z-20">
           </div>
           <div className="absolute inset-0 z-30 flex flex-col justify-between">
-            <div className="text-white px-6 pt-20 md:px-28 md:pt-36 lg:px-28 lg:pt-36 xl:px-28 xl:pt-36">
+            <div className="px-6 pt-20 md:px-28 md:pt-36 lg:px-28 lg:pt-36 xl:px-28 xl:pt-36">
               {tags}
-              <h1 className="w-full text-4xl leading-relaxed post-content-title text-center break-normal">
-                <Text text={page.properties.Page.title} />
+              <h1 className="w-full text-4xl leading-relaxed post-content-title text-center break-normal text-white">
+                {page.properties.Page.title[0].plain_text}
               </h1>
               <p className="text-zinc-400 text-center">
                 {postingDate}
@@ -260,7 +285,7 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
             </div>
             <div className="text-white py-8">
               <a href="#post-content-start">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </a>
@@ -278,23 +303,35 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
               <Text text={page.properties.Page.title} />
             </div>
           </div>
-          <div className="fixed top-0 inset-x-0 px-8 py-5 bg-white drop-shadow-md z-10 flex flex-col md:flex-row lg:flex-row gap-2">
+          <div className="fixed top-0 inset-x-0 px-8 py-5 bg-white dark:bg-black  drop-shadow-md z-10 flex flex-col md:flex-row lg:flex-row gap-2">
             <div className="flex flex-row justify-between">
-              <p className="post-content-title flex-none">Icednut's Space</p>
+              <p className="post-content-title flex-none text-black dark:text-white">Icednut's Space</p>
               <div className="flex flex-row gap-4">
                 <div className="block md:hidden lg:hidden xl:hidden">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                  </svg>
+                  <button className="cursor-pointer" onClick={toggleTheme}>
+                    {
+                      theme === "dark" ?
+                        (
+                          <svg xmlns="http://www.w3.org/2000/svg" key="sun" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                          </svg>
+                        ) :
+                        (
+                          <svg xmlns="http://www.w3.org/2000/svg" key="moon" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                          </svg>
+                        )
+                    }
+                  </button>
                 </div>
-                <div className="block md:hidden lg:hidden" onClick={togglePostTitle}>
+                <div className="block md:hidden lg:hidden xl:hidden" onClick={togglePostTitle}>
                   {
                     isVisiblePostTitle ? (
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
                       </svg>
                     ) : (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                       </svg>
                     )
@@ -302,14 +339,26 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
                 </div>
               </div>
             </div>
-            <p className="hidden md:block lg:block">·</p>
-            <div className={`post-title ${isVisiblePostTitle ? 'block' : 'hidden'} grow md:block lg:block font-bold text-slate-500`}>
-              <Text text={page.properties.Page.title} />
+            <p className="hidden md:block lg:block xl:block">·</p>
+            <div className={`post-title ${isVisiblePostTitle ? 'block' : 'hidden'} grow md:block lg:block font-bold text-zinc-500 dark:text-zinc-400`}>
+              {page.properties.Page.title[0].plain_text}
             </div>
             <div className="hidden md:block lg:block xl:block">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
+              <button className="cursor-pointer" onClick={toggleTheme}>
+                {
+                  theme === "dark" ?
+                    (
+                      <svg xmlns="http://www.w3.org/2000/svg" key="sun" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                    ) :
+                    (
+                      <svg xmlns="http://www.w3.org/2000/svg" key="moon" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                      </svg>
+                    )
+                }
+              </button>
             </div>
           </div>
         </section>
@@ -319,7 +368,7 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
               <Fragment key={block.id}>{renderBlock(block)}</Fragment>
             ))}
             <div className="mt-5 flex flex-col gap-1">
-              <p className="text-sm text-slate-500">Tags:</p>
+              <p className="text-sm text-zinc-500 dark:text-zinc-500">Tags:</p>
               <div>
                 {footerTags}
               </div>
@@ -332,13 +381,11 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
                 <p className="text-sm text-zinc-500">Previous</p>
                 {
                   previousPost ? (
-                    <Link href={`/${previousPost.id}`}>
-                      <a className="blog-link">
-                        <p>{previousPost.properties.Page.title[0].plain_text}</p>
-                      </a>
-                    </Link>
+                    <a className="blog-link text-dark dark:text-white" href={`/${previousPost.id}`}>
+                      <p>{previousPost.properties.Page.title[0].plain_text}</p>
+                    </a>
                   ) : (
-                    <p>None</p>
+                    <p className="text-black dark:text-white">None</p>
                   )
                 }
               </div>
@@ -346,13 +393,11 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
                 <p className="text-sm text-zinc-500 text-left md:text-right lg:text-right">Next</p>
                 {
                   nextPost ? (
-                    <Link href={`/${nextPost.id}`}>
-                      <a className="blog-link">
-                        <p>{nextPost.properties.Page.title[0].plain_text}</p>
-                      </a>
-                    </Link>
+                    <a className="blog-link text-dark dark:text-white" href={`/${nextPost.id}`}>
+                      <p>{nextPost.properties.Page.title[0].plain_text}</p>
+                    </a>
                   ) : (
-                    <p>None</p>
+                    <p className="text-black dark:text-white">None</p>
                   )
                 }
               </div>
@@ -369,7 +414,7 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
       </article>
 
       <footer>
-        <div className="mt-44 pt-8 pb-12 text-sm text-center">
+        <div className="mt-44 pt-8 pb-12 text-sm text-center text-black dark:text-white">
           (C) 2022. Icednut All rights reserved.
         </div>
       </footer>
