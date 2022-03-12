@@ -242,75 +242,77 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <article className="leading-loose">
-        <div className="absolute inset-0 text-center py-10 bg-cover bg-center z-20" style={{backgroundImage: "url(" + thumbnailUrl + ")"}}>
-        </div>
-        <div className="absolute inset-0 bg-black opacity-70 z-20">
-        </div>
-        <div className="absolute inset-0 z-30 flex flex-col justify-between">
-          <div className="text-white px-6 pt-20 md:px-28 md:pt-36 lg:px-28 lg:pt-36 xl:px-28 xl:pt-36">
-            {tags}
-            <h1 className="w-full text-4xl leading-relaxed post-content-title text-center break-normal">
-              <Text text={page.properties.Page.title} />
-            </h1>
-            <p className="text-zinc-400 text-center">
-              {postingDate}
-            </p>
+      <article className="leading-loose max-w-screen-xl mx-auto">
+        <section>
+          <div className="absolute inset-0 text-center py-10 bg-cover bg-center z-20" style={{backgroundImage: "url(" + thumbnailUrl + ")"}}>
           </div>
-          <div className="text-white py-8">
-            <a href="#post-content-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
+          <div className="absolute inset-0 bg-black opacity-70 z-20">
           </div>
-        </div>
-        <div className="h-screen">
-        </div>
-        <div id="post-content-start" className="invisible py-6 flex flex-col md:flex-row lg:flex-row">
-          <div className="justify-between">
-            <Link href="/">
-              <p className="post-content-title flex-none">Icednut's Space</p>
-            </Link>
-          </div>
-          <div className="post-title grow font-bold">
-            <Text text={page.properties.Page.title} />
-          </div>
-        </div>
-        <div className="fixed top-0 inset-x-0 px-8 py-5 bg-white drop-shadow-md z-10 flex flex-col md:flex-row lg:flex-row gap-2">
-          <div className="flex flex-row justify-between">
-            <p className="post-content-title flex-none">Icednut's Space</p>
-            <div className="flex flex-row gap-4">
-              <div className="block md:hidden lg:hidden xl:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          <div className="absolute inset-0 z-30 flex flex-col justify-between">
+            <div className="text-white px-6 pt-20 md:px-28 md:pt-36 lg:px-28 lg:pt-36 xl:px-28 xl:pt-36">
+              {tags}
+              <h1 className="w-full text-4xl leading-relaxed post-content-title text-center break-normal">
+                <Text text={page.properties.Page.title} />
+              </h1>
+              <p className="text-zinc-400 text-center">
+                {postingDate}
+              </p>
+            </div>
+            <div className="text-white py-8">
+              <a href="#post-content-start">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
-              </div>
-              <div className="block md:hidden lg:hidden" onClick={togglePostTitle}>
-                {
-                  isVisiblePostTitle ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
-                    </svg>
-                  ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  )
-                }
-              </div>
+              </a>
             </div>
           </div>
-          <p className="hidden md:block lg:block">·</p>
-          <div className={`post-title ${isVisiblePostTitle ? 'block' : 'hidden'} grow md:block lg:block font-bold text-slate-500`}>
-            <Text text={page.properties.Page.title} />
+          <div className="h-screen">
           </div>
-          <div className="hidden md:block lg:block xl:block">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
+          <div id="post-content-start" className="invisible py-6 flex flex-col md:flex-row lg:flex-row">
+            <div className="justify-between">
+              <Link href="/">
+                <p className="post-content-title flex-none">Icednut's Space</p>
+              </Link>
+            </div>
+            <div className="post-title grow font-bold">
+              <Text text={page.properties.Page.title} />
+            </div>
           </div>
-        </div>
+          <div className="fixed top-0 inset-x-0 px-8 py-5 bg-white drop-shadow-md z-10 flex flex-col md:flex-row lg:flex-row gap-2">
+            <div className="flex flex-row justify-between">
+              <p className="post-content-title flex-none">Icednut's Space</p>
+              <div className="flex flex-row gap-4">
+                <div className="block md:hidden lg:hidden xl:hidden">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </svg>
+                </div>
+                <div className="block md:hidden lg:hidden" onClick={togglePostTitle}>
+                  {
+                    isVisiblePostTitle ? (
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                      </svg>
+                    ) : (
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    )
+                  }
+                </div>
+              </div>
+            </div>
+            <p className="hidden md:block lg:block">·</p>
+            <div className={`post-title ${isVisiblePostTitle ? 'block' : 'hidden'} grow md:block lg:block font-bold text-slate-500`}>
+              <Text text={page.properties.Page.title} />
+            </div>
+            <div className="hidden md:block lg:block xl:block">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </div>
+          </div>
+        </section>
         <section>
           <div className="line-numbers">
             {blocks.map((block) => (

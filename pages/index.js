@@ -134,7 +134,7 @@ export default function Home({ posts, tagCloud }) {
           <div className="h-16 bg-slate-100"></div>
         </header>
 
-        <div className="grid grid-cols-1">
+        <div className="max-w-screen-xl mx-auto">
           <div className="grid grid-cols-1 items-center content-center gap-5 px-6 py-44 break-normal">
             <h1 className="text-3xl font-bold text-center post-title">Blog</h1>
             <div id="tags" className="flex flex-row flex-wrap gap-3 px-4 justify-center">
