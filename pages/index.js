@@ -102,14 +102,14 @@ export default function Home({ posts, tagCloud }) {
         </header>
 
         <div className="grid grid-cols-1 gap-24">
-          <div className="h-52 grid grid-cols-1 items-center content-center gap-5 px-6 break-normal">
-            <h1 className="text-3xl font-bold text-center">Blog</h1>
-            <div id="tags" className="flex flex-row flex-wrap gap-4 px-4 justify-center">
+          <div className="grid grid-cols-1 items-center content-center gap-5 px-6 py-28 break-normal">
+            <h1 className="text-3xl font-bold text-center post-title">Blog</h1>
+            <div id="tags" className="flex flex-row flex-wrap gap-3 px-4 justify-center">
               {
                 Object.keys(tagCloud).map(tag => {
                   return (
                     <div className="flex flex-row flex-wrap gap-1">
-                      <p className="blog-link text-base">#{tag}</p>
+                      <p className="blog-link text-sm">#{tag}</p>
                       {
                         tagCloud[tag] > 1 ? 
                           (<p className="bg-sky-500 text-white rounded-full px-2 text-sm">{tagCloud[tag]}</p>) :
@@ -164,7 +164,7 @@ export default function Home({ posts, tagCloud }) {
                       <li key={post.id} className="flex flex-col gap-2 content-center">
                         <div className="flex-none">{postThumbnail}</div>
                         <div className="flex-none">
-                          <p className="text-medium text-sm text-zinc-700">{date}</p>
+                          <p className="text-medium text-xs text-zinc-700">{date}</p>
                         </div>
                         <div className="flex-none">
                           <h3>
@@ -200,7 +200,7 @@ export default function Home({ posts, tagCloud }) {
                 return (
                   <li key={post.id} className="flex flex-col gap-2 content-center">
                     <div className="flex-none">
-                      <p className="text-medium text-sm text-zinc-700">{date}</p>
+                      <p className="text-medium text-xs text-zinc-700">{date}</p>
                     </div>
                     <div className="flex-none">
                       <h3>

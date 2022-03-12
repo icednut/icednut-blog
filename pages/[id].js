@@ -248,7 +248,7 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
         <div className="absolute inset-0 bg-black opacity-70 z-20">
         </div>
         <div className="absolute inset-0 z-30 flex flex-col justify-between">
-          <div className="text-white px-6 pt-36 md:px-28 lg:px-28 xl:px-28">
+          <div className="text-white px-6 pt-20 md:px-28 md:pt-36 lg:px-28 lg:pt-36 xl:px-28 xl:pt-36">
             {tags}
             <h1 className="w-full text-4xl leading-relaxed post-content-title text-center break-normal">
               <Text text={page.properties.Page.title} />
