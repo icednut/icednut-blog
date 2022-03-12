@@ -316,9 +316,11 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
             {blocks.map((block) => (
               <Fragment key={block.id}>{renderBlock(block)}</Fragment>
             ))}
-            <div className="mt-5">
+            <div className="mt-5 flex flex-col gap-1">
               <p className="text-sm text-slate-500">Tags:</p>
-              {footerTags}
+              <div>
+                {footerTags}
+              </div>
             </div>
             <div className="w-full h-52 mt-6 bg-slate-200 p-4 rounded">comment</div>
           </div>
@@ -334,7 +336,7 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
                       </a>
                     </Link>
                   ) : (
-                    <p>없음</p>
+                    <p>None</p>
                   )
                 }
               </div>
@@ -348,14 +350,18 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
                       </a>
                     </Link>
                   ) : (
-                    <p>없음</p>
+                    <p>None</p>
                   )
                 }
               </div>
             </div>
-            <Link href="/">
-              <button className="blog-btn">Home</button>
-            </Link>
+            <div className="flex flex-row justify-center">
+              <Link href="/">
+                <button className="blog-btn w-full md:w-28 lg:w-28 xl:w-28 font-bold">
+                  Home
+                </button>
+              </Link>
+            </div>
           </div>
         </section>
       </article>

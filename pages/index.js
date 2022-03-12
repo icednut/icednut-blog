@@ -135,7 +135,7 @@ export default function Home({ posts, tagCloud }) {
         </header>
 
         <div className="grid grid-cols-1">
-          <div className="grid grid-cols-1 items-center content-center gap-5 px-6 py-36 break-normal">
+          <div className="grid grid-cols-1 items-center content-center gap-5 px-6 py-44 break-normal">
             <h1 className="text-3xl font-bold text-center post-title">Blog</h1>
             <div id="tags" className="flex flex-row flex-wrap gap-3 px-4 justify-center">
               {
@@ -252,8 +252,10 @@ export default function Home({ posts, tagCloud }) {
                 );
               })}
             </ol>
-            <div className="text-center mt-12">
-              <button className="blog-btn w-full">More</button>
+            <div className="mt-12 flex flex-row justify-center">
+              <button className="blog-btn w-full md:w-28 lg:w-28 xl:w-28 font-bold">
+                More
+              </button>
             </div>
           </div>
         </div>
