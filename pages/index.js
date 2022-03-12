@@ -102,11 +102,24 @@ export default function Home({ posts, tagCloud }) {
         </header>
 
         <div className="grid grid-cols-1 gap-24">
-          <div className="h-52 grid grid-cols-1 items-center content-center gap-4 px-6 break-normal">
-            <h1 className="text-2xl text-center">Blog</h1>
-            <p className="text-base text-neutral-400 leading-relaxed text-center">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+          <div className="h-52 grid grid-cols-1 items-center content-center gap-5 px-6 break-normal">
+            <h1 className="text-3xl font-bold text-center">Blog</h1>
+            <div id="tags" className="flex flex-row flex-wrap gap-4 px-4 justify-center">
+              {
+                Object.keys(tagCloud).map(tag => {
+                  return (
+                    <div className="flex flex-row flex-wrap gap-1">
+                      <p className="blog-link text-base">#{tag}</p>
+                      {
+                        tagCloud[tag] > 1 ? 
+                          (<p className="bg-sky-500 text-white rounded-full px-2 text-sm">{tagCloud[tag]}</p>) :
+                          (<p className="hidden"></p>)
+                      }
+                    </div>
+                  );
+                })
+              }
+            </div>
           </div>
           <div>
             <div className="flex gap-2 pb-1 mb-4 items-center">
@@ -210,32 +223,10 @@ export default function Home({ posts, tagCloud }) {
               <button className="blog-btn w-full">More</button>
             </div>
           </div>
-          <div>
-            <div className="flex gap-2 pb-1 mb-4 items-center">
-              <p className="flex-none text-xs text-zinc-400">Tags</p>
-              <div className="h-0.5 w-full border-b border-zinc-300"></div>
-            </div>
-            <div id="tags" className="flex flex-row flex-wrap gap-4 px-4">
-              {
-                Object.keys(tagCloud).map(tag => {
-                  return (
-                    <div className="flex flex-row flex-wrap gap-1">
-                      <p className="blog-link text-sm">#{tag}</p>
-                      {
-                        tagCloud[tag] > 1 ? 
-                          (<p className="bg-sky-500 text-white rounded-full px-2 text-sm">{tagCloud[tag]}</p>) :
-                          (<p className="hidden px-2 text-sm">{tagCloud[tag]}</p>)
-                      }
-                    </div>
-                  );
-                })
-              }
-            </div>
-          </div>
         </div>
 
         <footer>
-          <div className="mt-44 pt-8 pb-12 text-sm text-right">
+          <div className="mt-44 pt-8 pb-12 text-sm text-center">
             (C) 2022. Icednut All rights reserved.
           </div>
         </footer>

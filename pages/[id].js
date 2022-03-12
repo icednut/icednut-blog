@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import Head from "next/head";
-import { getDatabase, getTagCloud, getPostingDate, getPage, getBlocks } from "../lib/notion";
+import { getDatabase, getPostingDate, getPage, getBlocks } from "../lib/notion";
 import Link from "next/link";
 import { databaseId } from "./index.js";
 import styles from "./post.module.css";
@@ -23,11 +23,12 @@ export const Text = ({ text }) => {
       annotations: { bold, code, color, italic, strikethrough, underline },
       text,
     } = value;
+
     return (
       <span
         className={[
           bold ? "font-bold" : "",
-          code ? styles.code : "",
+          code ? styles.codetext : "",
           italic ? "italic" : "",
           strikethrough ? "line-through" : "",
           underline ? "underline" : "",
@@ -193,7 +194,7 @@ export const getTags = (page, additionalCssClass) => {
   var cssClass = additionalCssClass;
 
   if (!cssClass) {
-    cssClass = "font-bold text-xs";
+    cssClass = "font-bold text-sm";
   }
 
   return (
@@ -212,7 +213,7 @@ export const getThumbnailUrl = (page) => {
   return page.cover.external.url;
 };
 
-export default function Post({ page, blocks, tagCloud, previousPost, nextPost }) {
+export default function Post({ page, blocks, previousPost, nextPost }) {
   if (!page || !blocks) {
     return <div />;
   }
@@ -247,7 +248,7 @@ export default function Post({ page, blocks, tagCloud, previousPost, nextPost })
         <div className="absolute inset-0 bg-black opacity-70 z-20">
         </div>
         <div className="absolute inset-0 z-30 flex flex-col justify-between">
-          <div className="text-white px-6 py-16 md:px-28 md:py-28 lg:px-28 lg:py-28">
+          <div className="text-white px-6 pt-36 md:px-28 lg:px-28 xl:px-28">
             {tags}
             <h1 className="w-full text-4xl leading-relaxed post-content-title text-center break-normal">
               <Text text={page.properties.Page.title} />
@@ -301,15 +302,16 @@ export default function Post({ page, blocks, tagCloud, previousPost, nextPost })
             {blocks.map((block) => (
               <Fragment key={block.id}>{renderBlock(block)}</Fragment>
             ))}
-            <div className="mt-10">
+            <div className="mt-5">
+              <p className="text-sm text-slate-500">Tags:</p>
               {footerTags}
             </div>
             <div className="w-full h-52 mt-6 bg-slate-200 p-4 rounded">comment</div>
           </div>
-          <div id="post-footer" className="py-4 mt-16 flex flex-col justify-center">
+          <div id="post-footer" className="mt-32 flex flex-col gap-10 justify-center">
             <div className="flex flex-col md:flex-row lg:flex-row justify-between mb-10 gap-4">
               <div className="flex flex-col justify-start">
-                <p className="text-xs text-zinc-500">Previous</p>
+                <p className="text-sm text-zinc-500">Previous</p>
                 {
                   previousPost ? (
                     <Link href={`/${previousPost.id}`}>
@@ -323,7 +325,7 @@ export default function Post({ page, blocks, tagCloud, previousPost, nextPost })
                 }
               </div>
               <div className="flex flex-col">
-                <p className="text-xs text-zinc-500 text-left md:text-right lg:text-right">Next</p>
+                <p className="text-sm text-zinc-500 text-left md:text-right lg:text-right">Next</p>
                 {
                   nextPost ? (
                     <Link href={`/${nextPost.id}`}>
@@ -341,33 +343,11 @@ export default function Post({ page, blocks, tagCloud, previousPost, nextPost })
               <button className="blog-btn">Home</button>
             </Link>
           </div>
-          <div className="mt-24">
-            <div className="flex gap-2 pb-1 mb-4 items-center">
-              <p className="flex-none text-xs text-zinc-400">All Tags</p>
-              <div className="h-0.5 w-full border-b border-zinc-300"></div>
-            </div>
-            <div id="tags" className="flex flex-row flex-wrap gap-4 px-4">
-              {
-                Object.keys(tagCloud).map(tag => {
-                  return (
-                    <div className="flex flex-row flex-wrap gap-1">
-                      <p className="blog-link text-sm">#{tag}</p>
-                      {
-                        tagCloud[tag] > 1 ? 
-                          (<p className="bg-sky-500 text-white rounded-full px-2 text-sm">{tagCloud[tag]}</p>) :
-                          (<p className="hidden px-2 text-sm">{tagCloud[tag]}</p>)
-                      }
-                    </div>
-                  );
-                })
-              }
-            </div>
-          </div>
         </section>
       </article>
 
       <footer>
-        <div className="mt-44 pt-8 pb-12 text-sm text-right">
+        <div className="mt-44 pt-8 pb-12 text-sm text-center">
           (C) 2022. Icednut All rights reserved.
         </div>
       </footer>
@@ -388,7 +368,6 @@ export const getStaticProps = async (context) => {
   const posts = await getDatabase(databaseId);
   const page = await getPage(id);
   const blocks = await getBlocks(id);
-  const tagCloud = getTagCloud(posts);
 
   const currentPostIndex = posts.findIndex((post) => post.id == id);
   let previousPost = null;
@@ -431,7 +410,6 @@ export const getStaticProps = async (context) => {
     props: {
       page,
       blocks: blocksWithChildren,
-      tagCloud,
       previousPost,
       nextPost
     },

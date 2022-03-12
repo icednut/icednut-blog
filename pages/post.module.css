@@ -34,6 +34,11 @@
   border-radius: 2px;
 }
 
+.codetext {
+  font-family: 'Fira Code', monospace;
+  @apply text-sm bg-slate-200 text-red-600 px-1.5 py-0.5 rounded align-middle;
+}
+
 /* @media (prefers-color-scheme: dark) {
   .code {
     background-color: rgb(15, 8, 28);
