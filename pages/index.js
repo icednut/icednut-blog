@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 import { getDatabase, getPostingDate, getTagCloud } from "../lib/notion";
 import { Text, getTags, getThumbnailUrl } from "./[id].js";
 
@@ -77,6 +78,12 @@ const getPostThumbnail = (post) => {
 };
 
 export default function Home({ posts, tagCloud }) {
+  const [isShowMenu, setShowMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setShowMenu(!isShowMenu);
+  };
+
   return (
     <div>
       <Head>
@@ -86,33 +93,42 @@ export default function Home({ posts, tagCloud }) {
 
       <main className="px-4">
         <header>
-          <div className="fixed px-8 py-5 inset-x-0 bg-white drop-shadow-md flex flex-row justify-between">
-            <Link href="/">
-              <p className="post-content-title cursor-pointer">Icednut's Space</p>
-            </Link>
-            <div className="flex flex-row gap-4">
-              <div className="hidden md:block lg:block xl:block">
-                <div className="flex flex-row gap-5">
-                  <p className="">About</p>
-                  <Link href="/">
-                    <p className="cursor-pointer">Blog</p>
-                  </Link>
-                  <p className="">Life</p>
+          <div className="fixed px-8 py-5 inset-x-0 bg-white drop-shadow-md flex flex-col gap-7">
+            <div className="flex flex-row justify-between">
+              <Link href="/">
+                <p className="post-content-title cursor-pointer">Icednut's Space</p>
+              </Link>
+              <div className="flex flex-row gap-4">
+                <div className="hidden md:block lg:block xl:block">
+                  <div className="flex flex-row gap-5">
+                    <p className="">About</p>
+                    <Link href="/">
+                      <p className="cursor-pointer">Blog</p>
+                    </Link>
+                    <p className="">Life</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                  </div>
+                </div>
+                <div className="block md:hidden lg:hidden xl:hidden">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                   </svg>
                 </div>
+                <div className="block md:hidden lg:hidden xl:hidden" onClick={toggleMenu}>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </div>
               </div>
-              <div className="block md:hidden lg:hidden xl:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              </div>
-              <div className="block md:hidden lg:hidden xl:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </div>
+            </div>
+            <div className={(isShowMenu ? "flex" : "hidden") + " flex-col gap-5 pl-4"}>
+              <p className="">About</p>
+              <Link href="/">
+                <p className="cursor-pointer">Blog</p>
+              </Link>
+              <p className="">Life</p>
             </div>
           </div>
           <div className="h-16 bg-slate-100"></div>
