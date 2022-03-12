@@ -90,19 +90,29 @@ export default function Home({ posts, tagCloud }) {
             <Link href="/">
               <p className="post-content-title cursor-pointer">Icednut's Space</p>
             </Link>
-            <div className="flex flex-row gap-5">
-              <p className="">About</p>
-              <Link href="/">
-                <p className="cursor-pointer">Blog</p>
-              </Link>
-              <p className="">Life</p>
+            <div className="hidden md:block lg:block xl:block">
+              <div className="flex flex-row gap-5">
+                <p className="">About</p>
+                <Link href="/">
+                  <p className="cursor-pointer">Blog</p>
+                </Link>
+                <p className="">Life</p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              </div>
+            </div>
+            <div className="block md:hidden lg:hidden xl:hidden">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
             </div>
           </div>
-          <div className="h-28"></div>
+          <div className="h-16 bg-slate-100"></div>
         </header>
 
-        <div className="grid grid-cols-1 gap-24">
-          <div className="grid grid-cols-1 items-center content-center gap-5 px-6 py-28 break-normal">
+        <div className="grid grid-cols-1">
+          <div className="grid grid-cols-1 items-center content-center gap-5 px-6 py-36 break-normal">
             <h1 className="text-3xl font-bold text-center post-title">Blog</h1>
             <div id="tags" className="flex flex-row flex-wrap gap-3 px-4 justify-center">
               {
@@ -121,7 +131,7 @@ export default function Home({ posts, tagCloud }) {
               }
             </div>
           </div>
-          <div>
+          <div className="mb-24">
             <div className="flex gap-2 pb-1 mb-4 items-center">
               <p className="flex-none text-xs text-zinc-400">Recent Posts</p>
               <div className="h-0.5 w-full border-b border-zinc-300"></div>
