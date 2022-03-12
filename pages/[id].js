@@ -269,7 +269,9 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
         </div>
         <div id="post-content-start" className="invisible py-6 flex flex-col md:flex-row lg:flex-row">
           <div className="justify-between">
-            <p className="post-content-title flex-none">Icednut's Space</p>
+            <Link href="/">
+              <p className="post-content-title flex-none">Icednut's Space</p>
+            </Link>
           </div>
           <div className="post-title grow font-bold">
             <Text text={page.properties.Page.title} />
@@ -278,26 +280,35 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
         <div className="fixed top-0 inset-x-0 px-8 py-5 bg-white drop-shadow-md z-10 flex flex-col md:flex-row lg:flex-row gap-2">
           <div className="flex flex-row justify-between">
             <p className="post-content-title flex-none">Icednut's Space</p>
-            {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg> */}
-            <div className="block md:hidden lg:hidden" onClick={togglePostTitle}>
-              {
-                isVisiblePostTitle ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                )
-              }
+            <div className="flex flex-row gap-4">
+              <div className="block md:hidden lg:hidden xl:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              </div>
+              <div className="block md:hidden lg:hidden" onClick={togglePostTitle}>
+                {
+                  isVisiblePostTitle ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )
+                }
+              </div>
             </div>
           </div>
           <p className="hidden md:block lg:block">·</p>
           <div className={`post-title ${isVisiblePostTitle ? 'block' : 'hidden'} grow md:block lg:block font-bold text-slate-500`}>
             <Text text={page.properties.Page.title} />
+          </div>
+          <div className="hidden md:block lg:block xl:block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
           </div>
         </div>
         <section>
