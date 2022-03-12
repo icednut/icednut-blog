@@ -180,7 +180,7 @@ export default function Home({ posts, tagCloud }) {
               <p className="text-black dark:text-white">Life</p>
             </div>
           </div>
-          <div className="h-16 bg-slate-100"></div>
+          <div className="h-16"></div>
         </header>
 
         <div className="max-w-screen-xl mx-auto">

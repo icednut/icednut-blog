@@ -41,13 +41,12 @@ code {
 }
 
 body {
-    @apply container mx-auto bg-white dark:bg-black;
+    @apply container mx-auto bg-white dark:bg-black break-words;
     font-family: 'GowunDodum-Regular';
-	word-break: break-all;
 }
 
 a, .blog-link {
-    @apply underline underline-offset-4 font-medium decoration-sky-600 decoration-1;
+    @apply underline underline-offset-4 font-medium decoration-sky-600 decoration-1 break-all;
 }
 
 .post-title {
