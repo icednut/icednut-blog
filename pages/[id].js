@@ -5,6 +5,7 @@ import Link from "next/link";
 import { databaseId } from "./index.js";
 import styles from "./post.module.css";
 import Prism from "prismjs";
+import { DiscussionEmbed } from 'disqus-react';
 import "prismjs/plugins/line-numbers/prism-line-numbers.min.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers.min.js";
 import "prismjs/plugins/autoloader/prism-autoloader";
@@ -112,7 +113,14 @@ const renderBlock = (block) => {
     case "divider":
       return <hr key={id} />;
     case "quote":
-      return <blockquote key={id}>{value.text[0].plain_text}</blockquote>;
+      console.log('quote', value.text[0]);
+      return (
+        <pre className="w-full overflow-auto bg-zinc-700 text-zinc-300 p-4 border-l-8 border-sky-400 rounded-r my-2" style={{whiteSpace: 'pre-wrap'}}>
+          <blockquote key={id}>
+            {value.text[0].plain_text}
+          </blockquote>
+        </pre>
+      );
     case "code":
       return (
         <pre className={"rounded language-" + value.language}>
@@ -244,7 +252,6 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
       localStorage.setItem("icednut-theme", "dark");
       setTheme("dark");
     }
-    console.log(localStorage.getItem("icednut-theme"), theme);
   };
 
   useEffect(() => {
@@ -255,7 +262,6 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
 
     const currentTheme = localStorage.getItem("icednut-theme") || (window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light");
 
-    console.log("currentTheme", currentTheme);
     document.documentElement.classList.add(currentTheme);
     setTheme(currentTheme);
   }, []);
@@ -373,7 +379,13 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
                 {footerTags}
               </div>
             </div>
-            <div className="w-full h-52 mt-6 bg-slate-200 p-4 rounded">comment</div>
+            <div className="w-full mt-6 bg-slate-200 p-4 rounded">
+              <DiscussionEmbed shortname="icednuts-space" config={{
+                url: `https://icednut.space/${page.id}`,
+                identifier: page.id,
+                title: page.properties.Page.title[0].plain_text
+              }} />
+            </div>
           </div>
           <div id="post-footer" className="mt-32 flex flex-col gap-10 justify-center">
             <div className="flex flex-col md:flex-row lg:flex-row justify-between mb-10 gap-4">

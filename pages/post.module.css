@@ -30,3 +30,7 @@
     background-color: rgb(15, 8, 28);
   }
 } */
+
+.content-pre {
+  white-space: pre-wrap;
+}
