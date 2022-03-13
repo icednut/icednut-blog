@@ -1,10 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
+import ReactGA from 'react-ga';
 import { useState, useEffect } from "react";
 import { getDatabase, getPostingDate, getTagCloud } from "../lib/notion";
 import { Text, getTags, getThumbnailUrl } from "./[id].js";
 
 export const databaseId = process.env.NOTION_DATABASE_ID;
+export const gaid = process.env.GAID;
 
 const getExtraContentUrl = (post) => {
   if (!post.properties || !post.properties.cms || !post.properties.cms.select || !post.properties.cms.select.name) {
@@ -107,6 +109,11 @@ export default function Home({ posts, tagCloud }) {
 
     document.documentElement.classList.add(currentTheme);
     setTheme(currentTheme);
+
+    if (gaid) {
+      ReactGA.initialize(gaid);
+      ReactGA.pageview(window.location.pathname + window.location.search);
+    }
   }, []);
 
   return (

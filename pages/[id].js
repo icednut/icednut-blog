@@ -6,6 +6,7 @@ import { databaseId } from "./index.js";
 import styles from "./post.module.css";
 import Prism from "prismjs";
 import { DiscussionEmbed } from 'disqus-react';
+import ReactGA from 'react-ga';
 import "prismjs/plugins/line-numbers/prism-line-numbers.min.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers.min.js";
 import "prismjs/plugins/autoloader/prism-autoloader";
@@ -14,6 +15,8 @@ import 'prismjs/plugins/show-language/prism-show-language';
 import "prismjs/themes/prism-tomorrow.min.css";
 import "prismjs/components/prism-java";
 import "prismjs/components/prism-scala";
+
+export const gaid = process.env.GAID;
 
 export const Text = ({ text }) => {
   if (!text) {
@@ -264,6 +267,11 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
 
     document.documentElement.classList.add(currentTheme);
     setTheme(currentTheme);
+
+    if (gaid) {
+      ReactGA.initialize(gaid);
+      ReactGA.pageview(window.location.pathname + window.location.search);
+    }
   }, []);
 
   return (
@@ -379,7 +387,7 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
                 {footerTags}
               </div>
             </div>
-            <div className="w-full mt-6 bg-slate-200 p-4 rounded">
+            <div className="w-full mt-6 bg-zinc-600 p-4 rounded">
               <DiscussionEmbed shortname="icednuts-space" config={{
                 url: `https://icednut.space/${page.id}`,
                 identifier: page.id,
