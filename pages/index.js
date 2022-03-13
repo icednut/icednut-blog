@@ -162,7 +162,7 @@ export default function Home({ posts, tagCloud }) {
                   </div>
                 </div>
                 <div className="block md:hidden lg:hidden xl:hidden">
-                  <button onClick={toggleTheme}>
+                  <button name="mobile_change_theme_btn" onClick={toggleTheme}>
                     {
                       theme === "dark" ?
                         (
@@ -309,7 +309,7 @@ export default function Home({ posts, tagCloud }) {
               })}
             </ol>
             <div className="mt-12 flex flex-row justify-center">
-              <button className="blog-btn w-full md:w-28 lg:w-28 xl:w-28 font-bold">
+              <button name="post_more_btn" className="blog-btn w-full md:w-28 lg:w-28 xl:w-28 font-bold">
                 More
               </button>
             </div>
