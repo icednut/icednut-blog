@@ -275,13 +275,13 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
   }, []);
 
   return (
-    <div className="px-6">
+    <>
       <Head>
         <title>{page.properties.Page.title[0].plain_text}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <article className="leading-loose max-w-screen-xl mx-auto">
+      <article className="leading-loose max-w-screen-xl mx-auto px-6">
         <section>
           <div className="absolute inset-0 text-center py-10 bg-cover bg-center z-20" style={{backgroundImage: "url(" + thumbnailUrl + ")"}}>
           </div>
@@ -322,7 +322,7 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
               <p className="post-content-title flex-none text-black dark:text-white">Icednut's Space</p>
               <div className="flex flex-row gap-4">
                 <div className="block md:hidden lg:hidden xl:hidden">
-                  <button className="cursor-pointer" onClick={toggleTheme}>
+                  <button name="change_theme_btn" className="cursor-pointer" onClick={toggleTheme}>
                     {
                       theme === "dark" ?
                         (
@@ -438,7 +438,7 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
           (C) 2022. Icednut All rights reserved.
         </div>
       </footer>
-    </div>
+    </>
   );
 }
 

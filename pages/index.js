@@ -39,7 +39,7 @@ const getPostPrviewDom = (post) => {
       break;
     default:
       postPreview = (
-        <p className="text-base text-zinc-400 dark:text-zinc-400 leading-relaxed">
+        <p className="text-base text-zinc-500 dark:text-zinc-400 leading-relaxed">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce velit tortor, dictum in gravida nec, aliquet non lorem. Donec vestibulum justo a diam ultricies pellentesque. Quisque mattis diam vel lacus tincidunt elementum.
         </p>
       );
@@ -101,7 +101,6 @@ export default function Home({ posts, tagCloud }) {
       localStorage.setItem("icednut-theme", "dark");
       setTheme("dark");
     }
-    console.log(localStorage.getItem("icednut-theme"), theme);
   };
 
   useEffect(() => {
@@ -117,10 +116,17 @@ export default function Home({ posts, tagCloud }) {
   }, []);
 
   return (
-    <div>
+    <>
       <Head>
         <title>Icednut's Space</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="Welcome to Icednut's Space! This is my coding training blog. (e.g. Scala, Functional Programming)" />
+        <meta name="keywords" content="Scala, Kotlin, Functional Programming" />
+        <meta author="icednut" />
+        <meta name="og:site_name" content="Icednut's Space" />
+        <meta name="og:title" content="Icednut's Space" />
+        <meta name="og:description" content="Welcome to Icednut's Space! This is my coding training blog. (e.g. Scala, Functional Programming)" />
+        <meta name="og:type" content="website" />
       </Head>
 
       <main className="px-4">
@@ -138,7 +144,7 @@ export default function Home({ posts, tagCloud }) {
                       <p className="cursor-pointer text-black dark:text-white">Blog</p>
                     </Link>
                     <p className="text-black dark:text-white">Life</p>
-                    <button className="cursor-pointer" onClick={toggleTheme}>
+                    <button name="change_theme_btn" className="cursor-pointer" onClick={toggleTheme}>
                       {
                         theme === "dark" ?
                           (
@@ -212,7 +218,7 @@ export default function Home({ posts, tagCloud }) {
           </div>
           <div id="recent_posts" className="mb-24">
             <div className="flex gap-2 pb-1 mb-4 items-center">
-              <p className="flex-none text-xs text-zinc-400">Recent Posts</p>
+              <p className="flex-none text-xs text-zinc-500">Recent Posts</p>
               <div className="h-0.5 w-full border-b border-zinc-300"></div>
             </div>
             <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
@@ -233,13 +239,11 @@ export default function Home({ posts, tagCloud }) {
                           <p className="text-medium text-xs text-zinc-700 dark:text-zinc-400">{date}</p>
                         </div>
                         <div className="flex-none">
-                          <h3>
-                            <Link href={postUrl}>
-                              <p className="font-bold text-lg text-black dark:text-white cursor-pointer post-title">
-                                <Text text={post.properties.Page.title} />
-                              </p>
-                            </Link>
-                          </h3>
+                          <Link href={postUrl}>
+                            <p className="font-bold text-lg text-black dark:text-white cursor-pointer post-title">
+                              <Text text={post.properties.Page.title} />
+                            </p>
+                          </Link>
                         </div>
                         <div className="shrink">{postPreview}</div>
                         <div className="flex-none">
@@ -256,13 +260,11 @@ export default function Home({ posts, tagCloud }) {
                           <p className="text-medium text-xs text-zinc-700 dark:text-zinc-400">{date}</p>
                         </div>
                         <div className="flex-none">
-                          <h3>
-                            <Link href={postUrl}>
-                              <p className="font-bold text-lg text-black dark:text-white cursor-pointer post-title">
-                                <Text text={post.properties.Page.title} />
-                              </p>
-                            </Link>
-                          </h3>
+                          <Link href={postUrl}>
+                            <p className="font-bold text-lg text-black dark:text-white cursor-pointer post-title">
+                              <Text text={post.properties.Page.title} />
+                            </p>
+                          </Link>
                         </div>
                         <div className="shrink">{postPreview}</div>
                         <div className="flex-none">{tags}</div>
@@ -276,7 +278,7 @@ export default function Home({ posts, tagCloud }) {
           </div>
           <div id="all_posts">
             <div className="flex gap-2 pb-1 mb-4 items-center">
-              <p className="flex-none text-xs text-zinc-400">All Posts</p>
+              <p className="flex-none text-xs text-zinc-500">All Posts</p>
               <div className="h-0.5 w-full border-b border-zinc-300"></div>
             </div>
             <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -292,13 +294,11 @@ export default function Home({ posts, tagCloud }) {
                       <p className="text-medium text-xs text-zinc-700 dark:text-zinc-400">{date}</p>
                     </div>
                     <div className="flex-none">
-                      <h3>
-                        <Link href={postUrl}>
-                          <p className="font-bold text-lg text-black dark:text-white cursor-pointer post-title">
-                            <Text text={post.properties.Page.title} />
-                          </p>
-                        </Link>
-                      </h3>
+                      <Link href={postUrl}>
+                        <p className="font-bold text-lg text-black dark:text-white cursor-pointer post-title">
+                          <Text text={post.properties.Page.title} />
+                        </p>
+                      </Link>
                     </div>
                     <div className="shrink">{postPreview}</div>
                     <div className="flex-none">
@@ -315,14 +315,14 @@ export default function Home({ posts, tagCloud }) {
             </div>
           </div>
         </div>
-
-        <footer>
-          <div className="mt-44 pt-8 pb-12 text-sm text-center text-black dark:text-white">
-            (C) 2022. Icednut All rights reserved.
-          </div>
-        </footer>
       </main>
-    </div>
+
+      <footer>
+        <div className="mt-44 pt-8 pb-12 text-sm text-center text-black dark:text-white">
+          (C) 2022. Icednut All rights reserved.
+        </div>
+      </footer>
+    </>
   );
 }
 
