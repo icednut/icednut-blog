@@ -116,7 +116,6 @@ const renderBlock = (block) => {
     case "divider":
       return <hr key={id} />;
     case "quote":
-      console.log('quote', value.text[0]);
       return (
         <pre className="w-full overflow-auto bg-zinc-700 text-zinc-300 p-4 border-l-8 border-sky-400 rounded-r my-2" style={{whiteSpace: 'pre-wrap'}}>
           <blockquote key={id}>
@@ -199,7 +198,7 @@ export const getTags = (page, additionalCssClass) => {
   var cmsDom = (<></>);
 
   if (cmsType) {
-    cmsDom = (<div className="rounded text-white bg-sky-600 px-2 py-0.5">{cmsType}</div>);
+    cmsDom = (<div className="rounded text-white bg-sky-700 px-2 py-0.5">{cmsType}</div>);
   }
 
   var cssClass = additionalCssClass;
@@ -299,8 +298,8 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
             </div>
             <div className="text-white py-8">
               <a href="#post-content-start">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </a>
             </div>
@@ -322,17 +321,17 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
               <p className="post-content-title flex-none text-black dark:text-white">Icednut's Space</p>
               <div className="flex flex-row gap-4">
                 <div className="block md:hidden lg:hidden xl:hidden">
-                  <button name="change_theme_btn" className="cursor-pointer" onClick={toggleTheme}>
+                  <button className="cursor-pointer" aria-label="Change Theme for Mobile" onClick={toggleTheme}>
                     {
                       theme === "dark" ?
                         (
-                          <svg xmlns="http://www.w3.org/2000/svg" key="sun" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                          <svg xmlns="http://www.w3.org/2000/svg" key="sun" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                           </svg>
                         ) :
                         (
-                          <svg xmlns="http://www.w3.org/2000/svg" key="moon" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                          <svg xmlns="http://www.w3.org/2000/svg" key="moon" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                           </svg>
                         )
                     }
@@ -341,12 +340,12 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
                 <div className="block md:hidden lg:hidden xl:hidden" onClick={togglePostTitle}>
                   {
                     isVisiblePostTitle ? (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
                       </svg>
                     ) : (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                       </svg>
                     )
                   }
@@ -358,17 +357,17 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
               {page.properties.Page.title[0].plain_text}
             </div>
             <div className="hidden md:block lg:block xl:block">
-              <button className="cursor-pointer" onClick={toggleTheme}>
+              <button className="cursor-pointer" aria-label="Change Theme for Desktop" onClick={toggleTheme}>
                 {
                   theme === "dark" ?
                     (
-                      <svg xmlns="http://www.w3.org/2000/svg" key="sun" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                      <svg xmlns="http://www.w3.org/2000/svg" key="sun" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                       </svg>
                     ) :
                     (
-                      <svg xmlns="http://www.w3.org/2000/svg" key="moon" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                      <svg xmlns="http://www.w3.org/2000/svg" key="moon" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                       </svg>
                     )
                 }
@@ -424,7 +423,7 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
             </div>
             <div className="flex flex-row justify-center">
               <Link href="/">
-                <button className="blog-btn w-full md:w-28 lg:w-28 xl:w-28 font-bold">
+                <button className="blog-btn w-full md:w-28 lg:w-28 xl:w-28 font-bold" aria-label="Go to Root Page">
                   Home
                 </button>
               </Link>

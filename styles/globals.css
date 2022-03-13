@@ -46,7 +46,7 @@ body {
 }
 
 a, .blog-link {
-    @apply underline underline-offset-4 font-medium decoration-sky-600 decoration-1 break-all;
+    @apply underline underline-offset-4 font-medium decoration-sky-700 decoration-1 break-all;
 }
 
 .post-title {
@@ -63,7 +63,7 @@ li.list-dot::before {
 }
 
 .blog-btn {
-	@apply rounded border-2 border-sky-600 text-sky-600 px-2 py-1;
+	@apply rounded border-2 border-sky-700 text-sky-700 px-2 py-1;
 }
 
 /****************************
