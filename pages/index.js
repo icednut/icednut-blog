@@ -4,7 +4,6 @@ import ReactGA from 'react-ga';
 import { useEffect } from "react";
 import { getDatabase, getPostingDate, getTagCloud } from "../lib/notion";
 import { Text, getTags, getThumbnailUrl } from "./[id].js";
-import InstagramEmbed from 'react-instagram-embed';
 import BlogHeader from "../components/header";
 import BlogFooter from "../components/footer";
 
@@ -126,27 +125,12 @@ export default function Home({ posts, tagCloud, gaid }) {
               }
             </div>
           </div>
-          <div>
-            <InstagramEmbed
-              clientAccessToken='223473709962129|df965915d7da10325f957d4025a35f4e'
-              url='https://instagr.am/p/Zw9o4/'
-              maxWidth={375}
-              hideCaption={false}
-              containerTagName='div'
-              injectScript
-              protocol=''
-              onLoading={() => {}}
-              onSuccess={() => {}}
-              onAfterRender={() => {}}
-              onFailure={() => {}}
-            />
-          </div>
           <div id="recent_posts" className="mb-24">
             <div className="flex gap-2 pb-1 mb-4 items-center">
               <p className="flex-none text-xs text-zinc-600 dark:text-zinc-500">Recent Posts</p>
               <div className="h-0.5 w-full border-b border-zinc-300 dark:border-zinc-500"></div>
             </div>
-            <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8">
+            <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10">
               {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index <= 2).map((post, index) => {
                 const date = getPostingDate(post);
                 const tags = getTags(post);
@@ -158,7 +142,7 @@ export default function Home({ posts, tagCloud, gaid }) {
                 switch (index) {
                   case 0:
                     postDom = (
-                      <li key={post.id} className="col-span-full flex flex-col gap-2 content-center">
+                      <li key={post.id} className="col-span-full flex flex-col gap-2 content-center mb-6">
                         <div className="flex-none">{postThumbnail}</div>
                         <div className="flex-none">
                           <p className="text-medium text-xs text-zinc-700 dark:text-zinc-400">{date}</p>
@@ -179,7 +163,7 @@ export default function Home({ posts, tagCloud, gaid }) {
                     break;
                   default:
                     postDom = (
-                      <li key={post.id} className="flex flex-col gap-2 content-center">
+                      <li key={post.id} className="flex flex-col gap-2 content-center mb-6">
                         <div className="flex-none">{postThumbnail}</div>
                         <div className="flex-none">
                           <p className="text-medium text-xs text-zinc-700 dark:text-zinc-400">{date}</p>
@@ -214,7 +198,7 @@ export default function Home({ posts, tagCloud, gaid }) {
                 const postUrl = getExtraContentUrl(post);
 
                 return (
-                  <li key={post.id} className="flex flex-col gap-2 content-center">
+                  <li key={post.id} className="flex flex-col gap-2 content-center mb-6">
                     <div className="flex-none">
                       <p className="text-medium text-xs text-zinc-700 dark:text-zinc-400">{date}</p>
                     </div>
