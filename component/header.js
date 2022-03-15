@@ -42,7 +42,7 @@ export default function BlogHeader() {
             <div className="flex flex-row gap-5">
               <div className="hidden md:block lg:block xl:block">
                 <div className="flex flex-row gap-10">
-                  <div className="flex flex-row gap-5">
+                  <div className="flex flex-row gap-4">
                     <p className="text-zinc-300 dark:text-zinc-500">About</p>
                     <Link href="/">
                       <p className="font-bold cursor-pointer text-black dark:text-white">Blog</p>

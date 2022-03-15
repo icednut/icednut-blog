@@ -53,7 +53,7 @@ export default function Life({  }) {
       <BlogHeader/>
 
       <main className="px-4">
-        <div id="blog_hero" className="grid grid-cols-1 items-center content-center gap-3 px-6 py-32 break-normal text-black dark:text-white">
+        <div id="blog_hero" className="grid grid-cols-1 items-center content-center gap-3 px-6 py-36 break-normal text-black dark:text-white">
           <h1 className="text-3xl font-bold text-center post-title">Life</h1>
           <div className="flex flex-row flex-wrap gap-3 px-4 justify-center text-lg">
             Try to be good when I'm gone.
