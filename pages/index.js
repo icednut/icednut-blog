@@ -5,11 +5,10 @@ import { useEffect } from "react";
 import { getDatabase, getPostingDate, getTagCloud } from "../lib/notion";
 import { Text, getTags, getThumbnailUrl } from "./[id].js";
 import InstagramEmbed from 'react-instagram-embed';
-import BlogHeader from "../component/header";
-import BlogFooter from "../component/footer";
+import BlogHeader from "../components/header";
+import BlogFooter from "../components/footer";
 
 export const databaseId = process.env.NOTION_DATABASE_ID;
-export const gaid = process.env.GAID;
 
 const getExtraContentUrl = (post) => {
   if (!post.properties || !post.properties.cms || !post.properties.cms.select || !post.properties.cms.select.name) {
@@ -82,7 +81,7 @@ const getPostThumbnail = (post) => {
   return postThumbnail;
 };
 
-export default function Home({ posts, tagCloud }) {
+export default function Home({ posts, tagCloud, gaid }) {
   useEffect(() => {
     if (gaid) {
       ReactGA.initialize(gaid);
@@ -234,7 +233,7 @@ export default function Home({ posts, tagCloud }) {
                 );
               })}
             </ol>
-            <div className="mt-12 flex flex-row justify-center">
+            <div className="mt-16 flex flex-row justify-center">
               <button className="blog-btn w-full md:w-28 lg:w-28 xl:w-28 font-bold" aria-label="Get more posts">
                 More
               </button>
@@ -255,7 +254,8 @@ export const getStaticProps = async () => {
   return {
     props: {
       posts: database,
-      tagCloud: tagCloud
+      tagCloud: tagCloud,
+      gaid: process.env.GAID
     },
     revalidate: 1,
   };

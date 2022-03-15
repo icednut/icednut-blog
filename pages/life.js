@@ -2,14 +2,19 @@ import Head from "next/head";
 import Instafeed from "instafeed.js";
 import { useEffect } from "react";
 import "./life.module.css";
-import BlogHeader from "../component/header";
-import BlogFooter from "../component/footer";
+import ReactGA from 'react-ga';
+import BlogHeader from "../components/header";
+import BlogFooter from "../components/footer";
 
-const instagramAccessToken = process.env.INSTAGRAM_ACCESS_TOKEN;
+export default function Life({ insToken, gaid }) {
 
-export default function Life({  }) {
   useEffect(() => {
-    const feed = new Instafeed({
+    if (gaid) {
+      ReactGA.initialize(gaid);
+      ReactGA.pageview(window.location.pathname + window.location.search);
+    }
+  
+    const instafeedOption = {
       transform: function(item) {
         item.timestamp = new Date(item.timestamp).toLocaleString(
           "en-US",
@@ -30,9 +35,10 @@ export default function Life({  }) {
             <pre class="insta-content">{{caption}}</pre>
           </div>
         </li>`,
-      accessToken: `${instagramAccessToken}`
-    });
-  
+      accessToken: `${insToken}`
+    };
+
+    const feed = new Instafeed(instafeedOption);
     feed.run();
   }, []);
 
@@ -71,6 +77,8 @@ export default function Life({  }) {
 export const getStaticProps = async () => {
   return {
     props: {
+      insToken: process.env.INS_TOKEN,
+      gaid: process.env.GAID
     },
     revalidate: 1,
   };

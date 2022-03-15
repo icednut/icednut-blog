@@ -7,7 +7,7 @@ import styles from "./post.module.css";
 import Prism from "prismjs";
 import { DiscussionEmbed } from 'disqus-react';
 import ReactGA from 'react-ga';
-import BlogFooter from "../component/footer";
+import BlogFooter from "../components/footer";
 import "prismjs/plugins/line-numbers/prism-line-numbers.min.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers.min.js";
 import "prismjs/plugins/autoloader/prism-autoloader";
@@ -18,7 +18,6 @@ import "prismjs/components/prism-java";
 import "prismjs/components/prism-scala";
 import "prismjs/components/prism-kotlin";
 
-export const gaid = process.env.GAID;
 
 export const Text = ({ text }) => {
   if (!text) {
@@ -225,7 +224,7 @@ export const getThumbnailUrl = (page) => {
   return page.cover.external.url;
 };
 
-export default function Post({ page, blocks, previousPost, nextPost }) {
+export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
   if (!page || !blocks) {
     return <div />;
   }
@@ -495,7 +494,8 @@ export const getStaticProps = async (context) => {
       page,
       blocks: blocksWithChildren,
       previousPost,
-      nextPost
+      nextPost,
+      gaid: process.env.GAID
     },
     revalidate: 1,
   };
