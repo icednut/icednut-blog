@@ -7,6 +7,7 @@ import styles from "./post.module.css";
 import Prism from "prismjs";
 import { DiscussionEmbed } from 'disqus-react';
 import ReactGA from 'react-ga';
+import BlogFooter from "../component/footer";
 import "prismjs/plugins/line-numbers/prism-line-numbers.min.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers.min.js";
 import "prismjs/plugins/autoloader/prism-autoloader";
@@ -15,6 +16,7 @@ import 'prismjs/plugins/show-language/prism-show-language';
 import "prismjs/themes/prism-tomorrow.min.css";
 import "prismjs/components/prism-java";
 import "prismjs/components/prism-scala";
+import "prismjs/components/prism-kotlin";
 
 export const gaid = process.env.GAID;
 
@@ -58,19 +60,19 @@ const renderBlock = (block) => {
       );
     case "heading_1":
       return (
-        <h2 className="text-2xl mt-6 mb-2 font-bold border-l-4 pl-2 border-slate-600">
+        <h2 className="text-2xl mt-10 mb-2 font-bold border-l-4 pl-2 border-slate-600">
           <Text text={value.text} />
         </h2>
       );
     case "heading_2":
       return (
-        <h3 className="text-xl mt-4 mb-2 font-bold border-l-2 pl-2 border-slate-400">
+        <h3 className="text-xl mt-6 mb-2 font-bold border-l-2 pl-2 border-slate-400">
           <Text text={value.text} />
         </h3>
       );
     case "heading_3":
       return (
-        <h4 className="text-lg mt-3 mb-2 font-bold">
+        <h4 className="text-lg mt-4 mb-2 font-bold">
           <Text text={value.text} />
         </h4>
       );
@@ -198,7 +200,7 @@ export const getTags = (page, additionalCssClass) => {
   var cmsDom = (<></>);
 
   if (cmsType) {
-    cmsDom = (<div className="rounded text-white bg-sky-700 px-2 py-0.5">{cmsType}</div>);
+    cmsDom = (<div className="rounded text-white bg-sky-600 px-2 py-0.5">{cmsType}</div>);
   }
 
   var cssClass = additionalCssClass;
@@ -432,11 +434,7 @@ export default function Post({ page, blocks, previousPost, nextPost }) {
         </section>
       </article>
 
-      <footer>
-        <div className="mt-44 pt-8 pb-12 text-sm text-center text-black dark:text-white">
-          (C) 2022. Icednut All rights reserved.
-        </div>
-      </footer>
+      <BlogFooter />
     </>
   );
 }

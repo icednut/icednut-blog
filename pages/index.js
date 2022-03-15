@@ -1,9 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 import ReactGA from 'react-ga';
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { getDatabase, getPostingDate, getTagCloud } from "../lib/notion";
 import { Text, getTags, getThumbnailUrl } from "./[id].js";
+import InstagramEmbed from 'react-instagram-embed';
+import BlogHeader from "../component/header";
+import BlogFooter from "../component/footer";
 
 export const databaseId = process.env.NOTION_DATABASE_ID;
 export const gaid = process.env.GAID;
@@ -80,35 +83,7 @@ const getPostThumbnail = (post) => {
 };
 
 export default function Home({ posts, tagCloud }) {
-  const [isShowMenu, setShowMenu] = useState(false);
-  const [theme, setTheme] = useState("");
-
-  const toggleMenu = () => {
-    setShowMenu(!isShowMenu);
-  };
-
-  const toggleTheme = () => {
-    const themeFromLocalStorage = localStorage.getItem("icednut-theme");
-
-    if (themeFromLocalStorage === 'dark') {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-      localStorage.setItem("icednut-theme", "light");
-      setTheme("light");
-    } else {
-      document.documentElement.classList.remove('light');
-      document.documentElement.classList.add('dark');
-      localStorage.setItem("icednut-theme", "dark");
-      setTheme("dark");
-    }
-  };
-
   useEffect(() => {
-    const currentTheme = localStorage.getItem("icednut-theme") || (window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light");
-
-    document.documentElement.classList.add(currentTheme);
-    setTheme(currentTheme);
-
     if (gaid) {
       ReactGA.initialize(gaid);
       ReactGA.pageview(window.location.pathname + window.location.search);
@@ -129,82 +104,18 @@ export default function Home({ posts, tagCloud }) {
         <meta name="og:type" content="website" />
       </Head>
 
-      <header>
-        <div className="fixed px-8 py-5 inset-x-0 bg-white dark:bg-black drop-shadow-md flex flex-col gap-7">
-          <div className="flex flex-row justify-between">
-            <Link href="/">
-              <p className="post-content-title cursor-pointer text-black dark:text-white">Icednut's Space</p>
-            </Link>
-            <div className="flex flex-row gap-4">
-              <div className="hidden md:block lg:block xl:block">
-                <div className="flex flex-row gap-5">
-                  <p className="text-black dark:text-white">About</p>
-                  <Link href="/">
-                    <p className="cursor-pointer text-black dark:text-white">Blog</p>
-                  </Link>
-                  <p className="text-black dark:text-white">Life</p>
-                  <button className="cursor-pointer" aria-label="Change Theme for Desktop" onClick={toggleTheme}>
-                    {
-                      theme === "dark" ?
-                        (
-                          <svg xmlns="http://www.w3.org/2000/svg" key="sun" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                          </svg>
-                        ) :
-                        (
-                          <svg xmlns="http://www.w3.org/2000/svg" key="moon" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                          </svg>
-                        )
-                    }
-                  </button>
-                </div>
-              </div>
-              <div className="block md:hidden lg:hidden xl:hidden">
-                <button aria-label="Change Theme for Mobile" onClick={toggleTheme}>
-                  {
-                    theme === "dark" ?
-                      (
-                        <svg xmlns="http://www.w3.org/2000/svg" key="sun" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                      ) :
-                      (
-                        <svg xmlns="http://www.w3.org/2000/svg" key="moon" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                        </svg>
-                      )
-                  }
-                </button>
-              </div>
-              <div className="block md:hidden lg:hidden xl:hidden" onClick={toggleMenu}>
-                <svg xmlns="http://www.w3.org/2000/svg" key="menu" className="h-6 w-6 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div id="mobile_toolbar_menu" className={(isShowMenu ? "flex" : "hidden") + " flex-col gap-5 pl-4"}>
-            <p className="text-black dark:text-white">About</p>
-            <Link href="/">
-              <p className="cursor-pointer text-black dark:text-white">Blog</p>
-            </Link>
-            <p className="text-black dark:text-white">Life</p>
-          </div>
-        </div>
-        <div className="h-16"></div>
-      </header>
+      <BlogHeader/>
 
       <main className="px-4">
         <div className="max-w-screen-xl mx-auto">
-          <div id="blog_hero" className="grid grid-cols-1 items-center content-center gap-5 px-6 py-44 break-normal">
+          <div id="blog_hero" className="grid grid-cols-1 items-center content-center gap-3 px-6 py-36 break-normal">
             <h1 className="text-3xl font-bold text-center post-title text-black dark:text-white">Blog</h1>
             <div id="tags" className="flex flex-row flex-wrap gap-3 px-4 justify-center">
               {
                 Object.keys(tagCloud).map(tag => {
                   return (
                     <div className="flex flex-row flex-wrap gap-1">
-                      <p className="blog-link text-sm text-black dark:text-white">#{tag}</p>
+                      <p className="blog-link text-base text-black dark:text-white">#{tag}</p>
                       {
                         tagCloud[tag] > 1 ? 
                           (<p className="bg-sky-700 text-white rounded-full px-2 text-sm">{tagCloud[tag]}</p>) :
@@ -216,12 +127,27 @@ export default function Home({ posts, tagCloud }) {
               }
             </div>
           </div>
+          <div>
+            <InstagramEmbed
+              clientAccessToken='223473709962129|df965915d7da10325f957d4025a35f4e'
+              url='https://instagr.am/p/Zw9o4/'
+              maxWidth={375}
+              hideCaption={false}
+              containerTagName='div'
+              injectScript
+              protocol=''
+              onLoading={() => {}}
+              onSuccess={() => {}}
+              onAfterRender={() => {}}
+              onFailure={() => {}}
+            />
+          </div>
           <div id="recent_posts" className="mb-24">
             <div className="flex gap-2 pb-1 mb-4 items-center">
-              <p className="flex-none text-xs text-zinc-500">Recent Posts</p>
-              <div className="h-0.5 w-full border-b border-zinc-300"></div>
+              <p className="flex-none text-xs text-zinc-600 dark:text-zinc-500">Recent Posts</p>
+              <div className="h-0.5 w-full border-b border-zinc-300 dark:border-zinc-500"></div>
             </div>
-            <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+            <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8">
               {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index <= 2).map((post, index) => {
                 const date = getPostingDate(post);
                 const tags = getTags(post);
@@ -278,10 +204,10 @@ export default function Home({ posts, tagCloud }) {
           </div>
           <div id="all_posts">
             <div className="flex gap-2 pb-1 mb-4 items-center">
-              <p className="flex-none text-xs text-zinc-500">All Posts</p>
-              <div className="h-0.5 w-full border-b border-zinc-300"></div>
+              <p className="flex-none text-xs text-zinc-600 dark:text-zinc-500">All Posts</p>
+              <div className="h-0.5 w-full border-b border-zinc-300 dark:border-zinc-500"></div>
             </div>
-            <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10">
               {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index > 2).map((post, index) => {
                 const date = getPostingDate(post);
                 const tags = getTags(post);
@@ -317,11 +243,7 @@ export default function Home({ posts, tagCloud }) {
         </div>
       </main>
 
-      <footer>
-        <div className="mt-44 pt-8 pb-12 text-sm text-center text-black dark:text-white">
-          (C) 2022. Icednut All rights reserved.
-        </div>
-      </footer>
+      <BlogFooter />
     </>
   );
 }
