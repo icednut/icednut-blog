@@ -40,7 +40,6 @@ const getPostPrviewDom = (post) => {
       break;
     default:
       const previewText = (post.previews && post.previews.length > 0) ? post.previews.join(" ") : "";
-
       postPreview = (
         <p className="text-base text-zinc-500 dark:text-zinc-400 leading-relaxed">
           {previewText}
