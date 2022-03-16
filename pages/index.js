@@ -39,14 +39,15 @@ const getPostPrviewDom = (post) => {
     case "velog":
       break;
     default:
+      const previewText = (post.previews && post.previews.length > 0) ? post.previews.join(" ") : "";
+
       postPreview = (
         <p className="text-base text-zinc-500 dark:text-zinc-400 leading-relaxed">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce velit tortor, dictum in gravida nec, aliquet non lorem. Donec vestibulum justo a diam ultricies pellentesque. Quisque mattis diam vel lacus tincidunt elementum.
+          {previewText}
         </p>
       );
       break;
   }
-
   return postPreview;
 };
 
@@ -126,7 +127,7 @@ export default function Home({ posts, tagCloud, gaid }) {
             </div>
           </div>
           <div id="recent_posts" className="mb-24">
-            <div className="flex gap-2 pb-1 mb-4 items-center">
+            <div className="flex gap-2 pb-1 mb-8 items-center">
               <p className="flex-none text-xs text-zinc-600 dark:text-zinc-500">Recent Posts</p>
               <div className="h-0.5 w-full border-b border-zinc-300 dark:border-zinc-500"></div>
             </div>
@@ -186,7 +187,7 @@ export default function Home({ posts, tagCloud, gaid }) {
             </ol>
           </div>
           <div id="all_posts">
-            <div className="flex gap-2 pb-1 mb-4 items-center">
+            <div className="flex gap-2 pb-1 mb-8 items-center">
               <p className="flex-none text-xs text-zinc-600 dark:text-zinc-500">All Posts</p>
               <div className="h-0.5 w-full border-b border-zinc-300 dark:border-zinc-500"></div>
             </div>

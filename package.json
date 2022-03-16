@@ -16,6 +16,7 @@
   "devDependencies": {
     "@types/node": "17.0.4",
     "@types/react": "17.0.38",
+    "async-sema": "^3.1.1",
     "autoprefixer": "^10.4.0",
     "disqus-react": "^1.1.2",
     "highlight.js": "^11.4.0",
