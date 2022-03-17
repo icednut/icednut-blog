@@ -131,7 +131,7 @@ export default function Home({ posts, tagCloud, gaid }) {
               <div className="h-0.5 w-full border-b border-zinc-300 dark:border-zinc-500"></div>
             </div>
             <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10">
-              {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index <= 2).map((post, index) => {
+              {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index <= 4).map((post, index) => {
                 const date = getPostingDate(post);
                 const tags = getTags(post);
                 const postThumbnail = getPostThumbnail(post);
@@ -187,14 +187,13 @@ export default function Home({ posts, tagCloud, gaid }) {
           </div>
           <div id="all_posts">
             <div className="flex gap-2 pb-1 mb-8 items-center">
-              <p className="flex-none text-xs text-zinc-600 dark:text-zinc-500 cafe24-ohsquare-air">All Posts ({posts.length - 3})</p>
+              <p className="flex-none text-xs text-zinc-600 dark:text-zinc-500 cafe24-ohsquare-air">All Posts ({posts.length - 5})</p>
               <div className="h-0.5 w-full border-b border-zinc-300 dark:border-zinc-500"></div>
             </div>
-            <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10">
-              {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index > 2).map((post, index) => {
+            <ol className="px-2 list-none grid grid-cols-1 gap-10">
+              {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index > 4).map((post, index) => {
                 const date = getPostingDate(post);
                 const tags = getTags(post);
-                const postPreview = getPostPrviewDom(post);
                 const postUrl = getExtraContentUrl(post);
 
                 return (
@@ -209,7 +208,6 @@ export default function Home({ posts, tagCloud, gaid }) {
                         </p>
                       </Link>
                     </div>
-                    <div className="shrink">{postPreview}</div>
                     <div className="flex-none">
                       {tags}
                     </div>

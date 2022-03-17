@@ -217,7 +217,7 @@ export const getTags = (page, additionalCssClass) => {
 };
 
 export const getThumbnailUrl = (page) => {
-  if (!page.cover || !page.cover.external || !page.cover.external.url) {
+  if (!page || !page.cover || !page.cover.external || !page.cover.external.url) {
     return ''; // TODO: default image url
   }
 
@@ -396,30 +396,36 @@ export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
             </div>
           </div>
           <div id="post-footer" className="mt-32 flex flex-col gap-10 justify-center">
-            <div className="flex-1 flex flex-col md:flex-row lg:flex-row justify-between mb-10 gap-4">
-              <div className="flex flex-col justify-start">
-                <p className="text-sm text-zinc-500">Previous</p>
-                {
-                  previousPost ? (
-                    <a className="blog-link text-dark dark:text-white" href={`/${previousPost.id}`}>
-                      <p className="cafe24-ohsquare-air">{previousPost.properties.Page.title[0].plain_text}</p>
-                    </a>
-                  ) : (
-                    <p className="text-black dark:text-white cafe24-ohsquare-air">None</p>
-                  )
-                }
+            <div className="flex flex-col h-80 md:h-auto lg:h-auto xl:h-auto md:flex-row lg:flex-row xl:flex-row gap-4">
+              <div className="relative h-40 flex-1 flex flex-col bg-cover bg-center" style={{backgroundImage: "url(" + getThumbnailUrl(previousPost) + ")"}}>
+                <div className="absolute inset-0 bg-black opacity-70"></div>
+                <div className="absolute p-4">
+                  <p className="text-sm text-zinc-400">Next</p>
+                  {
+                    previousPost ? (
+                      <a className="blog-link text-white" href={`/${previousPost.id}`}>
+                        <p className="cafe24-ohsquare-air">{previousPost.properties.Page.title[0].plain_text}</p>
+                      </a>
+                    ) : (
+                      <p className="text-white cafe24-ohsquare-air">None</p>
+                    )
+                  }
+                </div>
               </div>
-              <div className="flex flex-col">
-                <p className="text-sm text-zinc-500 text-left md:text-right lg:text-right">Next</p>
-                {
-                  nextPost ? (
-                    <a className="blog-link text-dark dark:text-white" href={`/${nextPost.id}`}>
-                      <p className="cafe24-ohsquare-air">{nextPost.properties.Page.title[0].plain_text}</p>
-                    </a>
-                  ) : (
-                    <p className="text-black dark:text-white cafe24-ohsquare-air">None</p>
-                  )
-                }
+              <div className="relative h-40 flex-1 flex flex-col bg-cover bg-center" style={{backgroundImage: "url(" + getThumbnailUrl(nextPost) + ")"}}>
+                <div className="absolute inset-0 bg-black opacity-70"></div>
+                <div className="absolute p-4">
+                  <p className="text-sm text-zinc-400 text-left">Previous</p>
+                  {
+                    nextPost ? (
+                      <a className="blog-link text-white" href={`/${nextPost.id}`}>
+                        <p className="cafe24-ohsquare-air">{nextPost.properties.Page.title[0].plain_text}</p>
+                      </a>
+                    ) : (
+                      <p className="text-white cafe24-ohsquare-air">None</p>
+                    )
+                  }
+                </div>
               </div>
             </div>
             <div className="flex flex-row justify-center">
