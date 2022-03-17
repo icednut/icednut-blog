@@ -106,17 +106,17 @@ export default function Home({ posts, tagCloud, gaid }) {
 
       <main className="px-4">
         <div className="max-w-screen-xl mx-auto">
-          <div id="blog_hero" className="grid grid-cols-1 items-center content-center gap-3 px-6 py-36 break-normal">
-            <h1 className="text-3xl font-bold text-center post-title text-black dark:text-white">Blog</h1>
-            <div id="tags" className="flex flex-row flex-wrap gap-3 px-4 justify-center">
+          <div id="page-title" className="grid grid-cols-1 items-center content-center gap-6 px-6 py-36 break-normal">
+            <h1 className="text-4xl font-bold text-center text-black dark:text-white special-elite">Blog</h1>
+            <div id="tags" className="flex flex-row flex-wrap gap-3 px-4 justify-center cafe24-ohsquare-air">
               {
                 Object.keys(tagCloud).map(tag => {
                   return (
-                    <div className="flex flex-row flex-wrap gap-1">
-                      <p className="blog-link text-base text-black dark:text-white">#{tag}</p>
+                    <div className="flex flex-row flex-wrap gap-1 text-sm align-bottom px-0.5">
+                      <p className="blog-link text-black dark:text-white">#{tag}</p>
                       {
                         tagCloud[tag] > 1 ? 
-                          (<p className="bg-sky-700 text-white rounded-full px-2 text-sm">{tagCloud[tag]}</p>) :
+                          (<p className="bg-sky-700 text-white rounded-full px-1 text-xs h-4">{tagCloud[tag]}</p>) :
                           (<p className="hidden"></p>)
                       }
                     </div>
@@ -127,7 +127,7 @@ export default function Home({ posts, tagCloud, gaid }) {
           </div>
           <div id="recent_posts" className="mb-24">
             <div className="flex gap-2 pb-1 mb-8 items-center">
-              <p className="flex-none text-xs text-zinc-600 dark:text-zinc-500">Recent Posts</p>
+              <p className="flex-none text-xs text-zinc-600 dark:text-zinc-500 cafe24-ohsquare-air">Recent Posts</p>
               <div className="h-0.5 w-full border-b border-zinc-300 dark:border-zinc-500"></div>
             </div>
             <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10">
@@ -149,7 +149,7 @@ export default function Home({ posts, tagCloud, gaid }) {
                         </div>
                         <div className="flex-none">
                           <Link href={postUrl}>
-                            <p className="font-bold text-lg text-black dark:text-white cursor-pointer post-title">
+                            <p className="font-bold text-lg text-black dark:text-white cursor-pointer cafe24-ohsquare-air">
                               <Text text={post.properties.Page.title} />
                             </p>
                           </Link>
@@ -170,7 +170,7 @@ export default function Home({ posts, tagCloud, gaid }) {
                         </div>
                         <div className="flex-none">
                           <Link href={postUrl}>
-                            <p className="font-bold text-lg text-black dark:text-white cursor-pointer post-title">
+                            <p className="font-bold text-lg text-black dark:text-white cursor-pointer cafe24-ohsquare-air">
                               <Text text={post.properties.Page.title} />
                             </p>
                           </Link>
@@ -187,7 +187,7 @@ export default function Home({ posts, tagCloud, gaid }) {
           </div>
           <div id="all_posts">
             <div className="flex gap-2 pb-1 mb-8 items-center">
-              <p className="flex-none text-xs text-zinc-600 dark:text-zinc-500">All Posts</p>
+              <p className="flex-none text-xs text-zinc-600 dark:text-zinc-500 cafe24-ohsquare-air">All Posts ({posts.length - 3})</p>
               <div className="h-0.5 w-full border-b border-zinc-300 dark:border-zinc-500"></div>
             </div>
             <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10">
@@ -204,7 +204,7 @@ export default function Home({ posts, tagCloud, gaid }) {
                     </div>
                     <div className="flex-none">
                       <Link href={postUrl}>
-                        <p className="font-bold text-lg text-black dark:text-white cursor-pointer post-title">
+                        <p className="font-bold text-lg text-black dark:text-white cursor-pointer cafe24-ohsquare-air">
                           <Text text={post.properties.Page.title} />
                         </p>
                       </Link>
@@ -217,11 +217,11 @@ export default function Home({ posts, tagCloud, gaid }) {
                 );
               })}
             </ol>
-            <div className="mt-16 flex flex-row justify-center">
+            {/* <div className="mt-16 flex flex-row justify-center">
               <button className="blog-btn w-full md:w-28 lg:w-28 xl:w-28 font-bold" aria-label="Get more posts">
                 More
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>

@@ -37,18 +37,18 @@ export default function BlogHeader() {
         <div className="fixed px-8 py-5 inset-x-0 bg-white dark:bg-black drop-shadow-md flex flex-col gap-7">
           <div className="flex flex-row justify-between">
             <Link href="/">
-              <p className="post-content-title cursor-pointer text-black dark:text-white">Icednut's Space</p>
+              <p className="cafe24-ohsquare cursor-pointer text-black dark:text-white">Icednut's Space</p>
             </Link>
             <div className="flex flex-row gap-5">
               <div className="hidden md:block lg:block xl:block">
                 <div className="flex flex-row gap-10">
                   <div className="flex flex-row gap-4">
-                    <p className="text-zinc-300 dark:text-zinc-500">About</p>
+                    <p className="text-zinc-300 dark:text-zinc-500 special-elite">About</p>
                     <Link href="/">
-                      <p className="font-bold cursor-pointer text-black dark:text-white">Blog</p>
+                      <p className="font-bold cursor-pointer text-black dark:text-white special-elite">Blog</p>
                     </Link>
                     <Link href="/life">
-                      <p className="font-bold text-black dark:text-white">Life</p>
+                      <p className="font-bold text-black dark:text-white special-elite">Life</p>
                     </Link>
                   </div>
                   <div>
@@ -95,12 +95,12 @@ export default function BlogHeader() {
             </div>
           </div>
           <div id="mobile_toolbar_menu" className={(isShowMenu ? "flex" : "hidden") + " flex-col gap-5 pl-4"}>
-            <p className="text-zinc-300 dark:text-zinc-500">About</p>
+            <p className="text-zinc-300 dark:text-zinc-500 special-elite">About</p>
             <Link href="/">
-              <p className="font-bold cursor-pointer text-black dark:text-white">Blog</p>
+              <p className="font-bold cursor-pointer text-black dark:text-white special-elite">Blog</p>
             </Link>
             <Link href="/life">
-              <p className="font-bold cursor-pointer text-black dark:text-white">Life</p>
+              <p className="font-bold cursor-pointer text-black dark:text-white special-elite">Life</p>
             </Link>
           </div>
         </div>

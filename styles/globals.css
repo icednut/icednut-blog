@@ -40,21 +40,38 @@ code {
     font-style: normal;
 }
 
+@font-face {
+	font-family: 'Special Elite';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/specialelite/v16/XLYgIZbkc4JPUL5CVArUVL0ntnAOSFNuQsI.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+.vitro-core {
+	font-family: 'Vitro_core', serif;
+}
+
+.special-elite {
+	font-family: 'Special Elite', cursive;
+}
+
+.cafe24-ohsquare {
+	font-family: 'Cafe24Ohsquare', serif;
+}
+
+.cafe24-ohsquare-air {
+	font-family: 'Cafe24Ohsquareair', serif;
+}
+
 body {
     @apply container mx-auto bg-white dark:bg-black break-words;
     font-family: 'GowunDodum-Regular';
 }
 
 a, .blog-link {
-    @apply underline underline-offset-4 font-medium decoration-sky-700 decoration-1 break-all;
-}
-
-.post-title {
-    font-family: 'Cafe24Ohsquareair';
-}
-
-.post-content-title {
-	font-family: 'Cafe24Ohsquare';
+    @apply underline underline-offset-4 font-medium decoration-sky-600 decoration-1 break-all;
 }
 
 li.list-dot::before {
@@ -132,10 +149,7 @@ div.code-toolbar > .toolbar > .toolbar-item > span:focus {
 }
 
 .insta-content {
-	@apply overflow-auto text-black dark:text-white;
+	@apply overflow-auto text-black dark:text-white leading-relaxed;
 	white-space: pre-wrap;
     font-family: 'GowunDodum-Regular';
-}
-
-.insta-img {
 }

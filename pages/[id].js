@@ -59,13 +59,13 @@ const renderBlock = (block) => {
       );
     case "heading_1":
       return (
-        <h2 className="text-2xl mt-10 mb-2 font-bold border-l-4 pl-2 border-slate-600">
+        <h2 className="text-2xl mt-10 mb-2 font-bold border-l-8 pl-2 border-slate-600">
           <Text text={value.text} />
         </h2>
       );
     case "heading_2":
       return (
-        <h3 className="text-xl mt-6 mb-2 font-bold border-l-2 pl-2 border-slate-400">
+        <h3 className="text-xl mt-6 mb-2 font-bold border-l-4 pl-2 border-slate-400">
           <Text text={value.text} />
         </h3>
       );
@@ -118,7 +118,7 @@ const renderBlock = (block) => {
       return <hr key={id} />;
     case "quote":
       return (
-        <pre className="w-full overflow-auto bg-zinc-700 text-zinc-300 p-4 border-l-8 border-sky-400 rounded-r my-2" style={{whiteSpace: 'pre-wrap'}}>
+        <pre className="w-full overflow-auto bg-zinc-700 text-zinc-300 p-4 border-l-4 border-sky-400 rounded-r my-2" style={{whiteSpace: 'pre-wrap'}}>
           <blockquote key={id}>
             {value.text[0].plain_text}
           </blockquote>
@@ -209,7 +209,7 @@ export const getTags = (page, additionalCssClass) => {
   }
 
   return (
-    <div className={"flex flex-wrap gap-2 " + cssClass}>
+    <div className={"flex flex-wrap gap-3 cafe24-ohsquare-air " + cssClass}>
       {cmsDom}
       {tags.map(tag => (<div className="blog-link">#{tag}</div>))}
     </div>
@@ -230,7 +230,7 @@ export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
   }
 
   const tags = getTags(page, "font-bold text-base justify-center text-white");
-  const footerTags = getTags(page, "font-bold text-base text-black dark:text-white"); // TODO: 이거 하나로 합치기
+  const footerTags = getTags(page, "font-bold text-sm text-black dark:text-white"); // TODO: 이거 하나로 합치기
   const postingDate = getPostingDate(page);
   const thumbnailUrl = getThumbnailUrl(page);
 
@@ -290,7 +290,7 @@ export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
           <div className="absolute inset-0 z-30 flex flex-col justify-between">
             <div className="px-6 pt-32 md:px-28 md:pt-36 lg:px-28 lg:pt-36 xl:px-28 xl:pt-36">
               {tags}
-              <h1 className="w-full text-4xl leading-relaxed post-content-title text-center break-normal text-white">
+              <h1 className="w-full text-4xl leading-relaxed cafe24-ohsquare text-center break-normal text-white">
                 {page.properties.Page.title[0].plain_text}
               </h1>
               <p className="text-zinc-400 text-center">
@@ -310,16 +310,16 @@ export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
           <div id="post-content-start" className="invisible py-6 flex flex-col md:flex-row lg:flex-row">
             <div className="justify-between">
               <Link href="/">
-                <p className="post-content-title flex-none">Icednut's Space</p>
+                <p className="cafe24-ohsquare flex-none">Icednut's Space</p>
               </Link>
             </div>
-            <div className="post-title grow font-bold">
+            <div className="cafe24-ohsquare-air grow font-bold">
               <Text text={page.properties.Page.title} />
             </div>
           </div>
           <div className="fixed top-0 inset-x-0 px-8 py-5 bg-white dark:bg-black  drop-shadow-md z-10 flex flex-col md:flex-row lg:flex-row gap-2">
             <div className="flex flex-row justify-between">
-              <p className="post-content-title flex-none text-black dark:text-white">Icednut's Space</p>
+              <p className="cafe24-ohsquare flex-none text-black dark:text-white">Icednut's Space</p>
               <div className="flex flex-row gap-4">
                 <div className="block md:hidden lg:hidden xl:hidden">
                   <button className="cursor-pointer" aria-label="Change Theme for Mobile" onClick={toggleTheme}>
@@ -354,7 +354,7 @@ export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
               </div>
             </div>
             <p className="hidden md:block lg:block xl:block">·</p>
-            <div className={`post-title ${isVisiblePostTitle ? 'block' : 'hidden'} grow md:block lg:block font-bold text-zinc-500 dark:text-zinc-400`}>
+            <div className={`cafe24-ohsquare-air ${isVisiblePostTitle ? 'block' : 'hidden'} grow md:block lg:block font-bold text-zinc-500 dark:text-zinc-400`}>
               {page.properties.Page.title[0].plain_text}
             </div>
             <div className="hidden md:block lg:block xl:block">
@@ -396,16 +396,16 @@ export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
             </div>
           </div>
           <div id="post-footer" className="mt-32 flex flex-col gap-10 justify-center">
-            <div className="flex flex-col md:flex-row lg:flex-row justify-between mb-10 gap-4">
+            <div className="flex-1 flex flex-col md:flex-row lg:flex-row justify-between mb-10 gap-4">
               <div className="flex flex-col justify-start">
                 <p className="text-sm text-zinc-500">Previous</p>
                 {
                   previousPost ? (
                     <a className="blog-link text-dark dark:text-white" href={`/${previousPost.id}`}>
-                      <p>{previousPost.properties.Page.title[0].plain_text}</p>
+                      <p className="cafe24-ohsquare-air">{previousPost.properties.Page.title[0].plain_text}</p>
                     </a>
                   ) : (
-                    <p className="text-black dark:text-white">None</p>
+                    <p className="text-black dark:text-white cafe24-ohsquare-air">None</p>
                   )
                 }
               </div>
@@ -414,10 +414,10 @@ export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
                 {
                   nextPost ? (
                     <a className="blog-link text-dark dark:text-white" href={`/${nextPost.id}`}>
-                      <p>{nextPost.properties.Page.title[0].plain_text}</p>
+                      <p className="cafe24-ohsquare-air">{nextPost.properties.Page.title[0].plain_text}</p>
                     </a>
                   ) : (
-                    <p className="text-black dark:text-white">None</p>
+                    <p className="text-black dark:text-white cafe24-ohsquare-air">None</p>
                   )
                 }
               </div>
