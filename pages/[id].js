@@ -310,7 +310,7 @@ export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
           <div id="post-content-start" className="invisible py-6 flex flex-col md:flex-row lg:flex-row">
             <div className="justify-between">
               <Link href="/">
-                <p className="cafe24-ohsquare flex-none">Icednut's Space</p>
+                <p className="cursor-pointer cafe24-ohsquare flex-none text-lg">Icednut's Space</p>
               </Link>
             </div>
             <div className="cafe24-ohsquare-air grow font-bold">
@@ -319,7 +319,9 @@ export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
           </div>
           <div className="fixed top-0 inset-x-0 px-8 py-5 bg-white dark:bg-black  drop-shadow-md z-10 flex flex-col md:flex-row lg:flex-row gap-2">
             <div className="flex flex-row justify-between">
-              <p className="cafe24-ohsquare flex-none text-black dark:text-white">Icednut's Space</p>
+              <Link href="/">
+                <p className="cursor-pointer cafe24-ohsquare flex-none text-black dark:text-white text-lg">Icednut's Space</p>
+              </Link>
               <div className="flex flex-row gap-4">
                 <div className="block md:hidden lg:hidden xl:hidden">
                   <button className="cursor-pointer" aria-label="Change Theme for Mobile" onClick={toggleTheme}>
