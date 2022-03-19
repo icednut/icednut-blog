@@ -1,0 +1,6 @@
+{
+  "presets": ["next/babel"],
+  "plugins": [],
+  "ignore": ["**target/"],
+  "compact": false
+}
