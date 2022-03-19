@@ -3,8 +3,8 @@ import Instafeed from "instafeed.js";
 import { useEffect } from "react";
 import "./life.module.css";
 import ReactGA from 'react-ga';
-import BlogHeader from "../components/header";
-import BlogFooter from "../components/footer";
+import BlogHeader from "../../components/header";
+import BlogFooter from "../../components/footer";
 
 export default function Life({ insToken, gaid }) {
 

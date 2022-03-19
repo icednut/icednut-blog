@@ -1,12 +1,11 @@
 import Head from "next/head";
-import Instafeed from "instafeed.js";
 import { useEffect } from "react";
-import "./life.module.css";
+// import "./about.module.css";
 import ReactGA from 'react-ga';
-import BlogHeader from "../components/header";
-import BlogFooter from "../components/footer";
+import BlogHeader from "../../components/header";
+import BlogFooter from "../../components/footer";
 
-export default function About({ insToken, gaid }) {
+export default function About({ gaid }) {
 
   useEffect(() => {
     if (gaid) {
@@ -55,7 +54,6 @@ export default function About({ insToken, gaid }) {
 export const getStaticProps = async () => {
   return {
     props: {
-      insToken: process.env.INS_TOKEN,
       gaid: process.env.GAID
     },
     revalidate: 1,
