@@ -1,13 +1,13 @@
 import { Fragment, useEffect, useState } from "react";
 import Head from "next/head";
-import { getDatabase, getPostingDate, getPage, getBlocks } from "../lib/notion";
+import { getDatabase, getPostingDate, getPage, getBlocks } from "../../lib/notion";
 import Link from "next/link";
-import { databaseId } from "./index.js";
+import { databaseId } from "../index.js";
 import styles from "./post.module.css";
 import Prism from "prismjs";
 import { DiscussionEmbed } from 'disqus-react';
 import ReactGA from 'react-ga';
-import BlogFooter from "../components/footer";
+import BlogFooter from "../../components/footer";
 import "prismjs/plugins/line-numbers/prism-line-numbers.min.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers.min.js";
 import "prismjs/plugins/autoloader/prism-autoloader";
@@ -405,7 +405,7 @@ export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
                   <p className="text-sm text-zinc-400">Next</p>
                   {
                     previousPost ? (
-                      <a className="blog-link text-white" href={`/${previousPost.id}`}>
+                      <a className="blog-link text-white" href={`/post/${previousPost.id}`}>
                         <p className="cafe24-ohsquare-air">{previousPost.properties.Page.title[0].plain_text}</p>
                       </a>
                     ) : (
@@ -420,7 +420,7 @@ export default function Post({ page, blocks, previousPost, nextPost, gaid }) {
                   <p className="text-sm text-zinc-400 text-left">Previous</p>
                   {
                     nextPost ? (
-                      <a className="blog-link text-white" href={`/${nextPost.id}`}>
+                      <a className="blog-link text-white" href={`/post/${nextPost.id}`}>
                         <p className="cafe24-ohsquare-air">{nextPost.properties.Page.title[0].plain_text}</p>
                       </a>
                     ) : (

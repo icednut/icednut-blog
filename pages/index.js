@@ -3,7 +3,7 @@ import Link from "next/link";
 import ReactGA from 'react-ga';
 import { useEffect } from "react";
 import { getDatabase, getPostingDate, getTagCloud } from "../lib/notion";
-import { Text, getTags, getThumbnailUrl } from "./[id].js";
+import { Text, getTags, getThumbnailUrl } from "./post/[id].js";
 import BlogHeader from "../components/header";
 import BlogFooter from "../components/footer";
 
@@ -11,7 +11,7 @@ export const databaseId = process.env.NOTION_DATABASE_ID;
 
 const getExtraContentUrl = (post) => {
   if (!post.properties || !post.properties.cms || !post.properties.cms.select || !post.properties.cms.select.name) {
-    return `/${post.id}`;
+    return `/post/${post.id}`;
   }
   var extraContentUrl;
   switch (post.properties.cms.select.name) {
@@ -19,7 +19,7 @@ const getExtraContentUrl = (post) => {
       extraContentUrl = post.properties.extra_contents.rich_text[0].href;
       break;
     default:
-      extraContentUrl = `/${post.id}`;
+      extraContentUrl = `/post/${post.id}`;
       break;
   }
   return extraContentUrl;
@@ -53,7 +53,7 @@ const getPostPrviewDom = (post) => {
 const getPostThumbnail = (post) => {
   const thumbnailUrl = getThumbnailUrl(post);
   var postThumbnail = (
-    <Link href={`/${post.id}`}>
+    <Link href={`/post/${post.id}`}>
       <div className="w-full h-64 cursor-pointer bg-cover bg-center" style={{backgroundImage: "url(" + thumbnailUrl + ")"}} />
     </Link>
   );
@@ -131,7 +131,7 @@ export default function Home({ posts, tagCloud, gaid }) {
               <div className="h-0.5 w-full border-b border-zinc-300 dark:border-zinc-500"></div>
             </div>
             <ol className="px-2 list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10">
-              {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index <= 4).map((post, index) => {
+              {posts.filter((post, index) => index <= 4).map((post, index) => {
                 const date = getPostingDate(post);
                 const tags = getTags(post);
                 const postThumbnail = getPostThumbnail(post);
@@ -191,7 +191,7 @@ export default function Home({ posts, tagCloud, gaid }) {
               <div className="h-0.5 w-full border-b border-zinc-300 dark:border-zinc-500"></div>
             </div>
             <ol className="px-2 list-none grid grid-cols-1 gap-10">
-              {posts.filter((post) => post.properties.Published.checkbox).filter((post, index) => index > 4).map((post, index) => {
+              {posts.filter((post, index) => index > 4).map((post, index) => {
                 const date = getPostingDate(post);
                 const tags = getTags(post);
                 const postUrl = getExtraContentUrl(post);
