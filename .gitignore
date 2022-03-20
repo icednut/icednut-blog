@@ -39,3 +39,5 @@ target
 .bloop
 .metals
 metals.sbt
+
+.idea

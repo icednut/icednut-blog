@@ -52,26 +52,28 @@ object NextApp extends AutoPlugin {
     scalaJSLinkerConfig ~= {
       // Enable ECMAScript module output.
       _.withModuleKind(ModuleKind.CommonJSModule)
-      // Use .mjs extension.
+        // Use .mjs extension.
         .withModuleSplitStyle(ModuleSplitStyle.FewestModules)
         .withSourceMap(false)
     },
     (Compile / fastLinkJS / scalaJSLinkerConfig) ~= {
       _.withModuleSplitStyle(ModuleSplitStyle.SmallestModules)
     },
-    scalaJsReactVersion := "2.0.0-RC4",
+    scalaJsReactVersion := "2.0.1",
     scalaJsReactUseGeneric := false,
     libraryDependencies ++=
       (if (scalaJsReactUseGeneric.value) {
-         Seq(
-           "com.github.japgolly.scalajs-react" %%% "core-generic" % scalaJsReactVersion.value,
-           "com.github.japgolly.scalajs-react" %%% "util-dummy-defaults" % scalaJsReactVersion.value
-         )
-       } else {
-         Seq(
-           "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReactVersion.value
-         )
-       }),
+        Seq(
+          "com.github.japgolly.scalajs-react" %%% "core-generic" % scalaJsReactVersion.value,
+          "com.github.japgolly.scalajs-react" %%% "util-dummy-defaults" % scalaJsReactVersion.value
+        )
+      } else {
+        Seq(
+          "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReactVersion.value
+        )
+      }) ++ Seq(
+        "io.github.nafg.scalajs-facades" %%% "simplefacade" % "0.16.0"
+      ),
     npm := "npm",
     startNextServer := {
       if (!nextServerIsRunning.value) {
