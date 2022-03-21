@@ -10,21 +10,21 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExportTopLevel, JSImport}
 
 
-object NextjsLink extends FacadeModule.NodeChildren.Simple {
-
-  @js.native
-  @JSImport("next/link", JSImport.Default, "Link")
-  object raw extends js.Object
-
-  override def mkProps = new Props
-
-  class Props extends PropTypes.WithChildren[VdomNode] {
-    val href = of[String]
-    val content = of[VdomNode]
-
-    override def children: PropTypes.Prop[VdomNode] = content
-  }
-}
+//object NextjsLink extends FacadeModule.NodeChildren.Simple {
+//
+//  @js.native
+//  @JSImport("next/link", JSImport.Default, "Link")
+//  object raw extends js.Object
+//
+//  override def mkProps = new Props
+//
+//  class Props extends PropTypes.WithChildren[VdomNode] {
+//    val href = of[String]
+//    val content = of[VdomNode]
+//
+//    override def children: PropTypes.Prop[VdomNode] = content
+//  }
+//}
 
 object HomePage {
 
@@ -37,8 +37,8 @@ object HomePage {
     .builder[Unit]
     .render_(
       <.div(
-        ^.className := "bg-slate-200 p-4",
-        NextjsLink(_.href := "/", _.content := <.p("Home"))
+        "Hello, world",
+        ^.className := "bg-slate-200 p-4"
       )
     )
     .build
