@@ -1,9 +1,12 @@
 package io.icednut.space.service.blog
 
 import cats.effect.IO
-import io.icednut.space.service.notion.NotionClient
+import cats.effect.unsafe.implicits.*
+import io.icednut.space.service.notion.{NotionClient, NotionDatabase}
 
 import scala.scalajs.js
+import scala.scalajs.js.Dictionary
+import scala.scalajs.js.JSConverters.JSRichMap
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 protected object PostService:
@@ -12,6 +15,13 @@ protected object PostService:
 
   @JSExportTopLevel(name = "getPostList", moduleID = "Posts")
   protected def getPostList(): js.Object with js.Dynamic = {
-    notionClient.getDatabase("TEST_DATABASE_ID")
-    ??? // TODO: 여기서 IO를 실행해야 되지 않을까?
+    val databaseIO = notionClient.getDatabase("TEST_DATABASE_ID")
+    val database = databaseIO.unsafeToFuture()
+      .value
+      .flatMap(_.toOption)
+      .getOrElse(NotionDatabase(`object` = "list", hasMore = false, `type` = "page"))
+
+    js.Dynamic.literal(
+      props = js.Dynamic.literal(database = Map("object" -> database.`object`).toJSDictionary)
+    )
   }
