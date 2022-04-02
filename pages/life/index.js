@@ -77,8 +77,8 @@ export default function Life({ insToken, gaid }) {
 export const getStaticProps = async () => {
   return {
     props: {
-      insToken: process.env.INS_TOKEN,
-      gaid: process.env.GAID
+      insToken: process.env.INS_TOKEN || "",
+      gaid: process.env.GAID || ""
     },
     revalidate: 1,
   };
