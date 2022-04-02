@@ -47,8 +47,8 @@ object NextApp extends AutoPlugin {
     fork := true,
     Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / "js",
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / "js",
-    Compile / scalaSource := baseDirectory.value / "src",
-    Test / scalaSource := baseDirectory.value / "test",
+    Compile / scalaSource := baseDirectory.value / "src" / "main" / "scala",
+    Test / scalaSource := baseDirectory.value / "src" / "test" / "scala",
     scalaJSLinkerConfig ~= {
       // Enable ECMAScript module output.
       _.withModuleKind(ModuleKind.CommonJSModule)
@@ -72,7 +72,12 @@ object NextApp extends AutoPlugin {
           "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReactVersion.value
         )
       }) ++ Seq(
-        "io.github.nafg.scalajs-facades" %%% "simplefacade" % "0.16.0"
+        "org.http4s" %%% "http4s-dom" % "0.2.1",
+        "org.http4s" %%% "http4s-client" % "0.23.11",
+        "org.http4s" %%% "http4s-circe" % "0.23.11",
+        "io.circe" %%% "circe-generic" % "0.15.0-M1",
+        "org.typelevel" %%% "cats-core" % "2.7.0",
+        "org.typelevel" %%% "cats-effect" % "3.3.1"
       ),
     npm := "npm",
     startNextServer := {

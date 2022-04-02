@@ -2,9 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@src/*": [
-        "src/*"
-      ],
+      "@src/*": ["src/*"],
+      "@resources/*": ["src/main/resources/*"],
       "@scalajs/*": ["target/js/*"]
     }
   }

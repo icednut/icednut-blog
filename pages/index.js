@@ -1,5 +1,5 @@
 // import Head from "next/head";
-import Link from "next/link";
+// import Link from "next/link";
 // import ReactGA from 'react-ga';
 // import { useEffect } from "react";
 // import { getDatabase, getPostingDate, getTagCloud } from "../lib/notion";
@@ -244,10 +244,4 @@ import Link from "next/link";
 // };
 
 export { Home as default } from "@scalajs/Home";
-// export default function Home({}) {
-//     return (
-//         <Link href={`/life`}>
-//             <p className="cursor-pointer">Home Link</p>
-//         </Link>
-//     );
-// };
+export { getPostList as getStaticProps } from "@scalajs/Posts"

@@ -1,7 +1,5 @@
 package io.icednut.space.pages
 
-import io.github.nafg.simplefacade.Implicits.{elementTypeWriter, vdomNodeWriter}
-import io.github.nafg.simplefacade.{FacadeModule, PropTypes}
 import io.icednut.space.components.NextLink
 import io.icednut.space.components.NextLink.{Props, RawComponent}
 import japgolly.scalajs.react.*
@@ -11,9 +9,9 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExportTopLevel, JSImport}
 
-object HomePage {
+object HomePage:
 
-  @JSImport("@src/io/icednut/space/pages/Home.module.css", JSImport.Namespace)
+  @JSImport("@resources/css/Home.module.css", JSImport.Namespace)
   @js.native
   val styles: js.Dictionary[String] = js.native
 
@@ -29,4 +27,3 @@ object HomePage {
     .build
     .toJsComponent
     .raw
-}
