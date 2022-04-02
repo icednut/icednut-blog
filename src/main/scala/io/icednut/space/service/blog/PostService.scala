@@ -1,4 +1,4 @@
-package io.icednut.space.service
+package io.icednut.space.service.blog
 
 import cats.effect.IO
 import io.icednut.space.service.notion.NotionClient
