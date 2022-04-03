@@ -14,7 +14,6 @@ object NextApp extends AutoPlugin {
 
   override def projectSettings = Seq(
     scalacOptions += "-language:implicitConversions",
-    fork := true,
     Compile / fullLinkJS / scalaJSLinkerOutputDirectory := target.value / "js",
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := target.value / "js",
     scalaJSLinkerConfig ~= {
@@ -35,7 +34,8 @@ object NextApp extends AutoPlugin {
       "io.circe" %%% "circe-generic" % "0.15.0-M1",
       "org.typelevel" %%% "cats-core" % "2.7.0",
       "org.typelevel" %%% "cats-effect" % "3.3.1",
-      "org.scalatest" %%% "scalatest" % "3.2.11" % Test
+      "org.scalatest" %%% "scalatest" % "3.2.11" % Test,
+      "org.typelevel" %%% "cats-effect-testing-scalatest" % "1.4.0" % Test
     )
   )
 
