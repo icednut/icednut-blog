@@ -23,8 +23,7 @@ class NotionClient[F[_] : Async]:
       method = Method.POST,
       uri = Uri.unsafeFromString(s"https://api.notion.com/v1/databases/${databaseId}/query"),
       headers = Headers(
-//        Authorization(Credentials.Token(AuthScheme.Bearer, notionToken)),
-        Header.Raw(CIString("Authorization"), s"Bearer '\"${notionToken}\"'"),
+        Authorization(Credentials.Token(AuthScheme.Bearer, notionToken)),
         Header.Raw(CIString("Notion-Version"), "2022-02-22")
       )
     )
