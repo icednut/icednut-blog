@@ -43,9 +43,6 @@ export default function BlogHeader() {
               <div className="hidden md:block lg:block xl:block">
                 <div className="flex flex-row gap-10">
                   <div className="flex flex-row gap-4 items-center">
-                    <Link href="/about">
-                      <p className="font-bold cursor-pointer text-black dark:text-white special-elite">About</p>
-                    </Link>
                     <Link href="/">
                       <p className="font-bold cursor-pointer text-black dark:text-white special-elite">Blog</p>
                     </Link>
@@ -97,9 +94,6 @@ export default function BlogHeader() {
             </div>
           </div>
           <div id="mobile_toolbar_menu" className={(isShowMenu ? "flex" : "hidden") + " flex-col gap-5 pl-4"}>
-            <Link href="/about">
-              <p className="font-bold cursor-pointer text-black dark:text-white special-elite">About</p>
-            </Link>
             <Link href="/">
               <p className="font-bold cursor-pointer text-black dark:text-white special-elite">Blog</p>
             </Link>
